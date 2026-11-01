@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>你的事业，现在走到哪一卦？ · 15 题小测</title>
+<style>
+/* ============================================================
+   事业运测评 · 样式 v2
+   奶油底 + 薄荷/蜜桃/天蓝马卡龙点缀，大圆角、软阴影、轻动效。
+   浅色主题，移动端优先。
+   ============================================================ */
+
+:root {
+  --bg:        #fdfbf7;
+  --card:      #ffffff;
+  --ink:       #3a3644;
+  --ink-2:     #6b6577;
+  --ink-3:     #a49db0;
+  --mint:      #35c1a0;
+  --mint-soft: #e4f7f1;
+  --peach:     #ff8f6b;
+  --peach-soft:#ffeee7;
+  --sky:       #56b2e8;
+  --sky-soft:  #e6f3fb;
+  --lilac:     #9b87e0;
+  --lilac-soft:#f0ebfb;
+  --sun:       #ffc44d;
+  --sun-soft:  #fff5e0;
+  --line:      #eee9e0;
+  --line-2:    #ddd6ca;
+  --radius:    20px;
+  --radius-s:  14px;
+  --shadow:    0 2px 6px rgba(120,105,95,.05), 0 10px 28px rgba(120,105,95,.07);
+  --shadow-hi: 0 6px 14px rgba(53,193,160,.18), 0 14px 34px rgba(120,105,95,.10);
+  --sans: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", system-ui, -apple-system, sans-serif;
+  --serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", Georgia, serif;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  margin: 0; padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 背景柔光斑 */
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(420px 380px at 8% 4%,  rgba(53,193,160,.16), transparent 70%),
+    radial-gradient(380px 340px at 94% 12%, rgba(255,143,107,.16), transparent 70%),
+    radial-gradient(420px 400px at 78% 82%, rgba(86,178,232,.14), transparent 70%),
+    radial-gradient(360px 320px at 12% 88%, rgba(155,135,224,.13), transparent 70%);
+}
+
+/* 漂浮装饰 */
+.floaties { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+.floaty {
+  position: absolute; border-radius: 50%; opacity: .5;
+  animation: drift linear infinite;
+}
+@keyframes drift {
+  0%   { transform: translateY(0) rotate(0deg); }
+  50%  { transform: translateY(-22px) rotate(180deg); }
+  100% { transform: translateY(0) rotate(360deg); }
+}
+
+.paper {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 24px 18px 40px;
+  min-height: 100vh;
+}
+
+/* ---------- 屏幕切换 ---------- */
+.screen { display: none; }
+.screen.active { display: block; animation: rise .45s cubic-bezier(.22,.9,.3,1); }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+/* ============================================================
+   封面
+   ============================================================ */
+.hero { text-align: center; padding: 22px 0 20px; position: relative; }
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: #fff; border: 1px solid var(--line);
+  padding: 6px 14px; border-radius: 30px;
+  font-size: 12.5px; color: var(--ink-2); font-weight: 500;
+  box-shadow: 0 3px 10px rgba(120,105,95,.07);
+  margin-bottom: 18px;
+}
+.hero-badge i {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--mint);
+  box-shadow: 0 0 0 4px var(--mint-soft);
+  animation: pulse 1.8s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100% { box-shadow: 0 0 0 4px var(--mint-soft); } 50% { box-shadow: 0 0 0 7px var(--mint-soft); } }
+
+.hero-art { width: 150px; height: 150px; margin: 0 auto 6px; display: block; }
+.hero-art .spin { transform-origin: 75px 75px; animation: spin 22s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.hero-art .bob { transform-origin: 75px 75px; animation: bob 4.5s ease-in-out infinite; }
+@keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+
+.title {
+  font-size: 34px; font-weight: 800; margin: 4px 0 8px;
+  letter-spacing: 1px; color: var(--ink); line-height: 1.3;
+}
+.title em {
+  font-style: normal;
+  background: linear-gradient(100deg, var(--mint), var(--sky) 55%, var(--lilac));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.subtitle { margin: 0 auto; color: var(--ink-2); font-size: 14.5px; max-width: 460px; line-height: 1.85; }
+
+/* 三张可翻转的模块卡 */
+.pick-row { display: flex; gap: 10px; margin: 22px 0 6px; }
+.pick {
+  flex: 1; cursor: pointer; perspective: 700px;
+  height: 132px; position: relative;
+}
+.pick-inner {
+  position: relative; width: 100%; height: 100%;
+  transition: transform .55s cubic-bezier(.3,.9,.3,1);
+  transform-style: preserve-3d;
+}
+.pick.flipped .pick-inner { transform: rotateY(180deg); }
+.pick-face {
+  position: absolute; inset: 0; backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: var(--radius); padding: 13px 11px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 5px; text-align: center;
+  border: 1.5px solid transparent;
+}
+.pick-front { background: #fff; box-shadow: var(--shadow); }
+.pick-back {
+  transform: rotateY(180deg);
+  color: #fff; font-size: 11.8px; line-height: 1.6; padding: 12px 10px;
+}
+.pick:hover .pick-front { transform: translateY(-3px); box-shadow: var(--shadow-hi); }
+.pick-front { transition: transform .2s ease, box-shadow .2s ease; }
+.pick-emoji { width: 34px; height: 34px; }
+.pick-name { font-size: 13.5px; font-weight: 700; }
+.pick-sub { font-size: 11px; color: var(--ink-3); }
+.pick-hint { font-size: 10.5px; color: var(--ink-3); margin-top: 2px; }
+.pick[data-c="1"] .pick-front { border-color: var(--mint-soft); }
+.pick[data-c="1"] .pick-back  { background: linear-gradient(140deg,#3ecfa8,#2ba98b); }
+.pick[data-c="2"] .pick-front { border-color: var(--sky-soft); }
+.pick[data-c="2"] .pick-back  { background: linear-gradient(140deg,#6cbdf0,#3f95cf); }
+.pick[data-c="3"] .pick-front { border-color: var(--sun-soft); }
+.pick[data-c="3"] .pick-back  { background: linear-gradient(140deg,#ffcb63,#f2a13c); }
+
+/* 封面提示条 */
+.tip-strip {
+  display: flex; align-items: center; gap: 8px; justify-content: center;
+  font-size: 12.5px; color: var(--ink-2); margin: 16px 0 20px;
+}
+.tip-strip span { background: #fff; border: 1px solid var(--line); padding: 4px 12px; border-radius: 20px; }
+
+/* 开始按钮 */
+.btn-go {
+  position: relative; width: 100%; border: none; cursor: pointer;
+  padding: 16px 20px; border-radius: 999px;
+  font-size: 16.5px; font-weight: 700; font-family: var(--sans); color: #fff;
+  background: linear-gradient(100deg, var(--mint), #45b7e8 60%, var(--lilac));
+  box-shadow: 0 8px 22px rgba(53,193,160,.32);
+  transition: transform .18s ease, box-shadow .18s ease;
+  overflow: hidden;
+}
+.btn-go::after {
+  content: ""; position: absolute; top: 0; left: -60%; width: 40%; height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.55), transparent);
+  animation: shine 3.2s ease-in-out infinite;
+}
+@keyframes shine { 0% { left: -60%; } 55%,100% { left: 130%; } }
+.btn-go:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(53,193,160,.4); }
+.btn-go:active { transform: translateY(1px) scale(.995); }
+
+.hero-foot { text-align: center; font-size: 12px; color: var(--ink-3); margin-top: 12px; }
+
+/* ---------- 通用卡片 ---------- */
+.card {
+  background: var(--card); border-radius: var(--radius);
+  padding: 20px; margin-bottom: 14px; box-shadow: var(--shadow);
+  border: 1px solid rgba(238,233,224,.9);
+}
+.card-title { font-size: 16px; font-weight: 800; margin: 0 0 10px; color: var(--ink); }
+.para { margin: 0 0 12px; color: var(--ink-2); font-size: 14.5px; }
+.para:last-child { margin-bottom: 0; }
+.para b, .para strong { color: var(--ink); font-weight: 700; }
+
+/* ---------- 按钮 ---------- */
+.btn {
+  display: block; width: 100%; padding: 13px 18px;
+  font-size: 15px; font-family: var(--sans); font-weight: 600;
+  border-radius: 999px; border: 1.5px solid transparent;
+  cursor: pointer; transition: all .18s ease; text-align: center;
+}
+.btn-primary {
+  background: var(--mint); color: #fff;
+  box-shadow: 0 5px 14px rgba(53,193,160,.28);
+}
+.btn-primary:hover { background: #2bb094; }
+.btn-primary:active { transform: translateY(1px); }
+.btn-primary:disabled { background: var(--line-2); color: #fff; box-shadow: none; cursor: not-allowed; }
+.btn-ghost { background: #fff; color: var(--ink-2); border-color: var(--line-2); }
+.btn-ghost:hover { border-color: var(--ink-3); color: var(--ink); }
+.btn-text {
+  background: none; border: none; color: var(--ink-3);
+  font-size: 13.5px; cursor: pointer; padding: 0; font-family: var(--sans);
+}
+.btn-text:hover { color: var(--mint); }
+
+/* ============================================================
+   答题
+   ============================================================ */
+.quiz-head { margin-bottom: 14px; }
+.progress { margin-top: 10px; }
+.progress-bar { height: 8px; background: #fff; border-radius: 6px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(120,105,95,.08); }
+.progress-bar span {
+  display: block; height: 100%; width: 0; border-radius: 6px;
+  background: linear-gradient(90deg, var(--mint), #4fc0e8);
+  transition: width .45s cubic-bezier(.3,.9,.3,1);
+}
+.progress-text { margin-top: 9px; font-size: 12.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; display: flex; align-items: center; gap: 8px; }
+.progress-text b { color: var(--mint); font-weight: 700; }
+.pill-mod { background: var(--mint-soft); color: #1f9c80; padding: 2px 10px; border-radius: 20px; font-size: 11.5px; font-weight: 600; }
+
+/* 15 颗进度珠 */
+.beads { display: flex; gap: 4px; justify-content: center; margin-top: 10px; }
+.bead { width: 100%; height: 5px; border-radius: 3px; background: #ece7de; transition: background .3s ease, transform .3s ease; }
+.bead.done { background: linear-gradient(90deg, var(--mint), #4fc0e8); }
+.bead.cur { background: var(--peach); transform: scaleY(1.6); }
+
+/* 题目卡（内层换题时重绘，动画随之重启） */
+.question-card { min-height: 250px; position: relative; }
+/* 猫猫探头：挂在题目卡右上沿，从卡片背后探出头张望 */
+.cat-zone {
+  position: absolute; right: 14px; bottom: 100%;
+  width: 92px; height: 62px; overflow: hidden;
+  pointer-events: none; z-index: 3;
+}
+.peek-cat { width: 100%; animation: peek 4.2s ease-in-out infinite; transform-origin: 50% 100%; }
+@keyframes peek {
+  0%       { transform: translateY(105%); }
+  16%      { transform: translateY(10%); }
+  26%      { transform: translateY(10%) rotate(-5deg); }
+  36%      { transform: translateY(10%) rotate(4deg); }
+  46%      { transform: translateY(10%) rotate(-2deg); }
+  58%      { transform: translateY(10%); }
+  62%      { transform: translateY(4%); }
+  78%,100% { transform: translateY(105%); }
+}
+.q-in { animation: cardIn .38s cubic-bezier(.22,.9,.3,1); }
+@keyframes cardIn { from { opacity: 0; transform: translateY(16px) scale(.985); } to { opacity: 1; transform: none; } }
+.q-tag {
+  display: inline-block; font-size: 11.5px; color: #1f9c80; font-weight: 700;
+  background: var(--mint-soft); padding: 4px 12px; border-radius: 20px; margin-bottom: 12px;
+}
+.q-stem { font-size: 19px; font-weight: 800; line-height: 1.65; margin: 0 0 18px; color: var(--ink); }
+
+.options { display: flex; flex-direction: column; gap: 9px; }
+.option {
+  display: flex; gap: 11px; align-items: center;
+  padding: 13px 15px; border: 1.5px solid var(--line); border-radius: var(--radius-s);
+  background: #fff; cursor: pointer; transition: all .18s cubic-bezier(.3,.9,.3,1);
+  font-size: 15px; line-height: 1.55; color: var(--ink-2);
+}
+.option:hover { border-color: var(--mint); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(53,193,160,.14); }
+.option.on {
+  border-color: var(--mint); background: var(--mint-soft); color: var(--ink); font-weight: 600;
+  box-shadow: 0 6px 16px rgba(53,193,160,.18);
+}
+.opt-key {
+  flex: none; width: 24px; height: 24px; border-radius: 50%;
+  border: 1.5px solid var(--line-2); color: var(--ink-3);
+  font-size: 12px; display: flex; align-items: center; justify-content: center;
+  font-weight: 800; transition: all .18s ease;
+}
+.option.on .opt-key {
+  background: var(--mint); border-color: var(--mint); color: #fff;
+  animation: pop .32s cubic-bezier(.3,1.4,.5,1);
+}
+@keyframes pop { 0% { transform: scale(.5); } 60% { transform: scale(1.18); } 100% { transform: scale(1); } }
+.opt-check { margin-left: auto; flex: none; opacity: 0; transform: scale(.5); transition: all .22s cubic-bezier(.3,1.4,.5,1); }
+.option.on .opt-check { opacity: 1; transform: scale(1); }
+
+/* 量表 */
+.scale-wrap { display: flex; gap: 6px; margin-top: 4px; }
+.scale-item {
+  flex: 1; border: 1.5px solid var(--line); border-radius: var(--radius-s);
+  background: #fff; padding: 12px 2px; text-align: center; cursor: pointer;
+  transition: all .18s cubic-bezier(.3,.9,.3,1);
+  font-size: 12.5px; color: var(--ink-3); line-height: 1.35;
+}
+.scale-item:hover { border-color: var(--sky); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(86,178,232,.15); }
+.scale-item.on {
+  border-color: var(--sky); background: var(--sky-soft); color: var(--ink); font-weight: 700;
+  box-shadow: 0 6px 16px rgba(86,178,232,.18);
+}
+.scale-num { display: block; font-size: 15px; font-weight: 800; margin-bottom: 3px; }
+.scale-ends { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--ink-3); margin-top: 8px; padding: 0 2px; }
+
+/* 题源 */
+details.basis { margin-top: 16px; border-top: 1px dashed var(--line-2); padding-top: 12px; }
+details.basis summary {
+  font-size: 12.5px; color: var(--ink-3); cursor: pointer; list-style: none;
+  display: flex; align-items: center; gap: 6px;
+}
+details.basis summary::-webkit-details-marker { display: none; }
+details.basis summary::before { content: "?"; display: inline-flex; align-items: center; justify-content: center;
+  width: 15px; height: 15px; border-radius: 50%; background: var(--lilac-soft); color: var(--lilac); font-size: 10px; font-weight: 800; }
+details.basis summary:hover { color: var(--lilac); }
+.basis-body {
+  margin-top: 10px; padding: 12px 14px;
+  background: var(--lilac-soft); border-radius: var(--radius-s);
+  font-size: 13px; color: var(--ink-2); line-height: 1.7; white-space: pre-line;
+}
+
+.quiz-foot { display: flex; gap: 10px; margin-top: 4px; }
+.quiz-foot .btn { width: auto; flex: 1; }
+.quiz-foot .btn-ghost { flex: 0 0 96px; }
+
+/* ============================================================
+   起卦动画
+   ============================================================ */
+.casting {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(253,251,247,.94);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 18px; animation: fadeIn .3s ease;
+}
+.casting.hide { opacity: 0; pointer-events: none; transition: opacity .35s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.casting svg { animation: spin 2.4s linear infinite; }
+.casting p { margin: 0; color: var(--ink-2); font-size: 14px; font-weight: 600; }
+.casting small { color: var(--ink-3); font-size: 12px; }
+.dots::after { content: ""; animation: dots 1.4s steps(4,end) infinite; }
+@keyframes dots { 0%{content:""} 25%{content:"·"} 50%{content:"··"} 75%{content:"···"} }
+
+/* ============================================================
+   结果页
+   ============================================================ */
+.result-hero { text-align: center; padding: 8px 0 4px; }
+.r-label { font-size: 12px; color: var(--ink-3); letter-spacing: 3px; }
+.r-hex-name {
+  font-family: var(--serif); font-size: 42px; font-weight: 800;
+  letter-spacing: 5px; margin: 2px 0 2px; color: var(--ink);
+}
+.r-hex-meta { font-size: 12.5px; color: var(--ink-3); }
+
+.hex-figure { display: flex; flex-direction: column; align-items: center; gap: 10px; margin: 18px 0 20px; }
+.yao-row { display: flex; gap: 14px; justify-content: center; width: 190px; }
+.yao { height: 13px; border-radius: 7px; }
+.yao.yang { width: 190px; background: linear-gradient(90deg, var(--mint), #4fc0e8); }
+.yao.yin  { width: 82px; background: linear-gradient(90deg, var(--peach), #ffb08c); }
+.hex-side {
+  display: flex; justify-content: space-between; width: 100%; max-width: 340px;
+  font-size: 11.5px; color: var(--ink-3); padding: 0 4px;
+}
+
+.xiang {
+  font-family: var(--serif); font-size: 16.5px; line-height: 1.9; color: var(--ink);
+  text-align: center; background: linear-gradient(140deg, #f4fbf8, #eef6fd);
+  border-radius: var(--radius); padding: 16px 18px; margin-bottom: 6px;
+}
+.xiang-src { text-align: center; font-size: 11.5px; color: var(--ink-3); margin: 8px 0 12px; }
+.xiang-modern {
+  font-size: 14px; line-height: 1.85; color: var(--ink-2);
+  background: #fffdf5; border: 1px dashed #f3d9a4; border-radius: var(--radius);
+  padding: 12px 14px; margin-bottom: 18px;
+}
+.xm-tag {
+  display: inline-block; font-size: 11px; font-weight: 800; color: #c07b12;
+  background: #fdeecd; border-radius: 12px; padding: 1px 9px; margin-right: 8px;
+  transform: translateY(-1px);
+}
+
+.block { margin-bottom: 14px; animation: blockIn .5s cubic-bezier(.22,.9,.3,1) both; }
+@keyframes blockIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+.block-title {
+  font-size: 15.5px; font-weight: 800; margin: 0 0 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.block-title i {
+  font-style: normal; font-size: 10.5px; color: var(--ink-3);
+  font-weight: 600; letter-spacing: 1.2px;
+  background: var(--line); padding: 2px 8px; border-radius: 20px;
+}
+.block-title::before {
+  content: ""; width: 5px; height: 16px; border-radius: 3px; flex: none;
+  background: linear-gradient(180deg, var(--mint), var(--sky));
+}
+
+.split { display: flex; gap: 10px; }
+.split-item { flex: 1; background: #fdfcf9; border-radius: var(--radius-s); padding: 13px 14px; }
+.split-pos { font-size: 11px; color: var(--ink-3); letter-spacing: 1px; margin-bottom: 4px; }
+.split-tri { font-family: var(--serif); font-size: 19px; font-weight: 800; margin-bottom: 4px; }
+.split-tri span { font-size: 11.5px; color: var(--ink-3); font-weight: 400; margin-left: 5px; font-family: var(--sans); }
+.split-desc { font-size: 12.5px; color: var(--ink-2); line-height: 1.6; }
+
+.radar-wrap { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.radar { flex: none; }
+.el-legend { flex: 1; min-width: 190px; }
+.el-row { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; font-size: 13px; }
+.el-dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.el-name { width: 26px; font-family: var(--serif); font-weight: 800; }
+.el-bar { flex: 1; height: 7px; background: #f1ede6; border-radius: 4px; overflow: hidden; }
+.el-bar span { display: block; height: 100%; border-radius: 4px; transition: width .7s cubic-bezier(.3,.9,.3,1); }
+.el-val { width: 22px; text-align: right; color: var(--ink-3); font-variant-numeric: tabular-nums; font-size: 12px; }
+.el-tag { font-size: 10.5px; padding: 1px 7px; border-radius: 20px; font-weight: 700; margin-left: 2px; }
+.el-tag.main { background: var(--mint-soft); color: #1f9c80; }
+.el-tag.sec  { background: var(--sky-soft);  color: #2f86bd; }
+.el-tag.weak { background: var(--peach-soft); color: #d9694a; }
+
+.dim-row { margin-bottom: 13px; }
+.dim-head { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 5px; }
+.dim-head .dim-a, .dim-head .dim-b { color: var(--ink-3); }
+.dim-head .dim-hit { color: var(--mint); font-weight: 800; }
+.dim-track { height: 8px; background: #f1ede6; border-radius: 5px; position: relative; overflow: hidden; }
+.dim-fill {
+  position: absolute; top: 0; height: 100%; border-radius: 5px;
+  background: linear-gradient(90deg, var(--mint), #4fc0e8);
+  transition: left .7s cubic-bezier(.3,.9,.3,1), width .7s cubic-bezier(.3,.9,.3,1);
+}
+.dim-mid { position: absolute; left: 50%; top: -2px; width: 2px; height: 12px; background: #fff; }
+.dim-note { font-size: 11.5px; color: var(--ink-3); margin-top: 4px; }
+
+.code-line { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+.code {
+  font-size: 25px; font-weight: 800; letter-spacing: 4px;
+  background: linear-gradient(100deg, var(--mint), var(--lilac));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.code-sub { font-size: 12.5px; color: var(--ink-3); }
+.hol-bar { display: flex; height: 28px; border-radius: 10px; overflow: hidden; margin-bottom: 12px; }
+.hol-seg {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11.5px; color: #fff; font-weight: 700;
+  transition: width .8s cubic-bezier(.3,.9,.3,1); white-space: nowrap; overflow: hidden;
+}
+.hol-item { margin-bottom: 11px; }
+.hol-name { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+.hol-name em { font-style: normal; font-size: 11.5px; color: var(--ink-3); font-weight: 400; margin-left: 6px; }
+.hol-text { font-size: 13px; color: var(--ink-2); line-height: 1.7; }
+.hol-text b { color: var(--ink); font-weight: 700; }
+
+.advice {
+  background: #fdfcf9; border-radius: var(--radius-s);
+  padding: 13px 15px; margin-bottom: 10px; border-left: 4px solid var(--mint);
+}
+.advice:last-child { margin-bottom: 0; }
+.advice.bi   { border-left-color: var(--peach); }
+.advice.xing { border-left-color: var(--lilac); }
+.advice-h { font-size: 14.5px; font-weight: 800; margin-bottom: 5px; display: flex; align-items: center; gap: 7px; }
+.advice-h .badge {
+  font-size: 10.5px; font-weight: 700; padding: 2px 9px; border-radius: 20px; letter-spacing: .5px;
+}
+.badge-shun { background: var(--mint-soft);  color: #1f9c80; }
+.badge-bi   { background: var(--peach-soft); color: #d9694a; }
+.badge-xing { background: var(--lilac-soft); color: #6f5ac4; }
+.advice-t { font-size: 13.5px; color: var(--ink-2); line-height: 1.8; }
+
+.relation {
+  background: linear-gradient(140deg, #f4fbf8, #eef6fd);
+  border-radius: var(--radius-s); padding: 15px 16px; margin-bottom: 12px;
+}
+.relation-h { font-size: 15px; font-weight: 800; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+.relation-h em {
+  font-style: normal; font-size: 11px; font-weight: 700;
+  padding: 2px 10px; border-radius: 20px;
+  background: linear-gradient(100deg, var(--mint), var(--sky)); color: #fff;
+}
+.relation-t { font-size: 13.5px; color: var(--ink-2); line-height: 1.8; }
+
+.result-actions { display: flex; gap: 10px; margin: 18px 0 14px; }
+.result-actions .btn { flex: 1; width: auto; }
+
+.note {
+  background: #fff; border-radius: var(--radius); padding: 14px 16px; margin-bottom: 14px;
+  box-shadow: var(--shadow);
+}
+.note summary {
+  font-size: 14px; font-weight: 700; cursor: pointer; list-style: none;
+  display: flex; align-items: center; gap: 7px; color: var(--ink);
+}
+.note summary::-webkit-details-marker { display: none; }
+.note summary::before { content: "+"; color: var(--mint); font-weight: 800; font-size: 15px; transition: transform .2s; }
+.note[open] summary::before { content: "−"; }
+.note-body {
+  margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--line);
+  font-size: 13px; color: var(--ink-2); line-height: 1.8;
+}
+.note-body p { margin: 0 0 10px; }
+.note-body p:last-child { margin-bottom: 0; }
+.note-body b { color: var(--ink); }
+
+.an-q { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px dashed var(--line); }
+.an-q:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.an-stem { font-size: 13.5px; font-weight: 700; color: var(--ink); margin-bottom: 3px; }
+.an-ans { font-size: 12.5px; color: var(--mint); margin-bottom: 5px; font-weight: 600; }
+.an-basis { font-size: 12.5px; color: var(--ink-3); line-height: 1.7; white-space: pre-line; }
+
+.disclaimer { font-size: 12px; color: var(--ink-3); text-align: center; line-height: 1.7; margin: 16px 0 0; }
+.foot { margin-top: 26px; text-align: center; font-size: 11.5px; color: var(--ink-3); letter-spacing: .5px; }
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed; left: 50%; bottom: 42px; transform: translateX(-50%) translateY(20px);
+  background: var(--ink); color: #fff; padding: 11px 22px; border-radius: 999px;
+  font-size: 14px; font-weight: 600; opacity: 0; pointer-events: none;
+  transition: all .3s cubic-bezier(.3,.9,.3,1); z-index: 300;
+  box-shadow: 0 8px 24px rgba(58,54,68,.28);
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ---------- 移动端 ---------- */
+@media (max-width: 480px) {
+  .paper { padding: 18px 14px 32px; }
+  .title { font-size: 28px; }
+  .hero-art { width: 128px; height: 128px; }
+  .pick-row { gap: 7px; }
+  .pick { height: 124px; }
+  .pick-name { font-size: 12.5px; }
+  .r-hex-name { font-size: 34px; letter-spacing: 3px; }
+  .q-stem { font-size: 17px; }
+  .xiang { font-size: 15px; padding: 14px; }
+  .split { flex-direction: column; }
+  .radar-wrap { justify-content: center; }
+  .el-legend { min-width: 100%; }
+  .yao-row { width: 158px; }
+  .yao.yang { width: 158px; }
+  .yao.yin { width: 66px; }
+  .option { padding: 12px 13px; font-size: 14.5px; }
+  .scale-item { font-size: 11px; padding: 10px 1px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="floaties" id="floaties"></div>
+
+<div class="paper">
+
+  <!-- ============ 封面 ============ -->
+  <section id="screen-intro" class="screen active">
+    <div class="hero">
+      <div class="hero-badge"><i></i>15 道题 · 3 分钟 · 出属于你的一卦</div>
+
+      <svg class="hero-art" viewBox="0 0 150 150" aria-hidden="true">
+        <defs>
+          <linearGradient id="gCard" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#ffd9a8"/><stop offset="1" stop-color="#ff9e78"/>
+          </linearGradient>
+          <linearGradient id="gRing" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#35c1a0"/><stop offset="1" stop-color="#56b2e8"/>
+          </linearGradient>
+        </defs>
+        <g class="spin">
+          <circle cx="75" cy="75" r="62" fill="none" stroke="url(#gRing)" stroke-width="3"
+                  stroke-dasharray="7 9" stroke-linecap="round" opacity=".65"/>
+          <circle cx="75" cy="11" r="5"  fill="#35c1a0" opacity=".85"/>
+          <circle cx="130" cy="48" r="4" fill="#ffc44d" opacity=".85"/>
+          <circle cx="130" cy="104" r="5" fill="#56b2e8" opacity=".85"/>
+          <circle cx="75"  cy="139" r="4" fill="#9b87e0" opacity=".85"/>
+          <circle cx="20"  cy="104" r="5" fill="#ff8f6b" opacity=".85"/>
+          <circle cx="20"  cy="48"  r="4" fill="#35c1a0" opacity=".85"/>
+        </g>
+        <g class="bob">
+          <rect x="47" y="42" width="56" height="66" rx="16" fill="url(#gCard)"/>
+          <rect x="47" y="42" width="56" height="66" rx="16" fill="none" stroke="#fff" stroke-width="2.5" opacity=".55"/>
+          <rect x="58" y="58" width="34" height="7" rx="3.5" fill="#fff" opacity=".95"/>
+          <rect x="58" y="71" width="14" height="7" rx="3.5" fill="#fff" opacity=".95"/>
+          <rect x="78" y="71" width="14" height="7" rx="3.5" fill="#fff" opacity=".95"/>
+          <rect x="58" y="84" width="34" height="7" rx="3.5" fill="#fff" opacity=".95"/>
+        </g>
+      </svg>
+
+      <h1 class="title">你的事业<br>现在走到<em>哪一卦</em>？</h1>
+      <p class="subtitle">用《周易》的卦象语言，给你讲一个关于自己的故事。</p>
+    </div>
+
+    <div class="pick-row" id="pickRow"></div>
+
+    <button class="btn-go" id="btnStart">开始 · 摇一卦</button>
+    <p class="hero-foot">上面三张卡可以翻过来看</p>
+
+    <details class="note" style="margin-top:16px">
+      <summary>这套题的依据与边界（想看再看）</summary>
+      <div class="note-body">
+        <p><b>能给你什么：</b>一个结构化的自我观察视角——你靠什么立身、在什么环境里损耗最快、当下该进还是该守。</p>
+        <p><b>不能给你什么：</b>不预测具体事件，不替你做决定，不判断吉凶。</p>
+        <p><b>数据来源：</b>卦名与《象传》取自通行本《周易》；五行性德取自《尚书·洪范》；性格维度取自荣格心理类型；职业兴趣取自霍兰德 RIASEC。白话解读为依卦象义理的演绎，非古籍原文。</p>
+        <p><b>已知局限：</b>15 题为精简版，心理学部分属简版自评（非标准 MBTI 施测），结果随状态波动。隔半年重测不一致是正常的。</p>
+        <p><b>隐私：</b>全部在本机浏览器内计算，不上传、不联网、不记录。</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ 答题 ============ -->
+  <section id="screen-quiz" class="screen">
+    <div class="quiz-head">
+      <button class="btn-text" id="btnBackIntro">← 返回封面</button>
+      <div class="progress">
+        <div class="progress-bar"><span id="progressFill"></span></div>
+        <div class="beads" id="beads"></div>
+        <div class="progress-text"><b><span id="progressNum">1</span>/15</b> · <span class="pill-mod" id="moduleName">禀赋 · 五行</span></div>
+      </div>
+    </div>
+
+    <div class="card question-card" id="questionCard"></div>
+
+    <div class="quiz-foot">
+      <button class="btn btn-ghost" id="btnPrev">上一题</button>
+      <button class="btn btn-primary" id="btnNext" disabled>下一题</button>
+    </div>
+  </section>
+
+  <!-- ============ 结果 ============ -->
+  <section id="screen-result" class="screen">
+    <div id="resultBody"></div>
+
+    <div class="result-actions">
+      <button class="btn btn-primary" id="btnCopy">复制文字版报告</button>
+      <button class="btn btn-ghost" id="btnRestart">再测一次</button>
+    </div>
+
+    <details class="note" id="analysisBox">
+      <summary>这 15 题在测什么（逐题拆解）</summary>
+      <div class="note-body" id="analysisBody"></div>
+    </details>
+
+    <p class="disclaimer">
+      本测评为自我觉察工具，不构成职业建议或任何预测。卦象为象征性语言，取其启发，不取其断定。
+    </p>
+  </section>
+
+  <footer class="foot">
+    周易 × 荣格心理类型 × 霍兰德职业兴趣 · 共 15 题 · 本机计算
+  </footer>
+</div>
+
+<!-- 起卦动画 -->
+<div class="casting" id="casting" style="display:none">
+  <svg width="86" height="86" viewBox="0 0 86 86" aria-hidden="true">
+    <circle cx="43" cy="43" r="34" fill="none" stroke="#eee9e0" stroke-width="6"/>
+    <path d="M43 9a34 34 0 0 1 34 34" fill="none" stroke="#35c1a0" stroke-width="6" stroke-linecap="round"/>
+    <path d="M43 9a34 34 0 0 0-34 34" fill="none" stroke="#56b2e8" stroke-width="6" stroke-linecap="round"/>
+  </svg>
+  <p>正在为你起卦<span class="dots"></span></p>
+  <small>把 15 道题合成了上下两卦</small>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+ * 事业运测评 · 卦象数据层
+ * ------------------------------------------------------------
+ * 数据来源与边界说明（务必保留）：
+ *  1. 八卦属性、卦名、六爻卦画：通行本《周易》。
+ *  2. 五行性德引文：《尚书·洪范》（"水曰润下，火曰炎上，木曰曲直，
+ *     金曰从革，土爰稼穑"）。
+ *  3. 「象传」原文：通行本《周易·象传》（大象辞）。
+ *  4. 「今译」（m 字段）：本项目对大象辞的白话直译，力求忠实原文语气，
+ *     便于现代读者理解；措辞为演绎，非古籍原文。
+ *  5. 「事业提示」：本项目依据卦象义理所作的白话演绎，非古籍原文，
+ *     仅作自我觉察的启发材料，不构成任何预测或决策依据。
+ * ============================================================ */
+
+window.HEX_DATA = (function () {
+
+  /* 八卦：爻象自下而上，1 为阳爻，0 为阴爻 */
+  const TRIGRAMS = {
+    '乾': { lines: [1, 1, 1], element: '金', symbol: '天', nature: '刚健', dir: '西北',
+            keyword: '主导 · 开创 · 自强不息',
+            desc: '乾为天，其性刚健。主决断、主领导、主"我来负责"。得此象者天然适合扛旗，代价是不肯低头、容易独自硬撑。' },
+    '兑': { lines: [1, 1, 0], element: '金', symbol: '泽', nature: '悦', dir: '西',
+            keyword: '和悦 · 沟通 · 以言感人',
+            desc: '兑为泽，其性和悦。主口舌、主人缘、主"让人舒服"。得此象者擅长连接与说服，代价是怕冲突、容易应下不该应的事。' },
+    '离': { lines: [1, 0, 1], element: '火', symbol: '火', nature: '丽', dir: '南',
+            keyword: '文明 · 显扬 · 以明动人',
+            desc: '离为火，其性附丽而明。主表达、主审美、主"被看见"。得此象者适合做内容与品牌，代价是热度难持久、易被情绪牵引。' },
+    '震': { lines: [1, 0, 0], element: '木', symbol: '雷', nature: '动', dir: '东',
+            keyword: '行动 · 破局 · 雷厉风行',
+            desc: '震为雷，其性动。主开创、主破局、主"先干起来"。得此象者启动力强，代价是后劲不足、易虎头蛇尾。' },
+    '巽': { lines: [0, 1, 1], element: '木', symbol: '风', nature: '入', dir: '东南',
+            keyword: '渗透 · 柔进 · 无孔不入',
+            desc: '巽为风，其性入。主协调、主流程、主"润物无声"。得此象者善于渗透与顺势，代价是主见不显、容易被人推着走。' },
+    '坎': { lines: [0, 1, 0], element: '水', symbol: '水', nature: '陷', dir: '北',
+            keyword: '智谋 · 沉潜 · 处险不惊',
+            desc: '坎为水，其性陷而能通。主谋略、主研究、主"想明白再动"。得此象者思维深、抗压久，代价是想太多、行动慢半拍。' },
+    '艮': { lines: [0, 0, 1], element: '土', symbol: '山', nature: '止', dir: '东北',
+            keyword: '笃定 · 守界 · 当止则止',
+            desc: '艮为山，其性止。主边界、主定力、主"到此为止"。得此象者稳得住、守得住，代价是不易变通、错过窗口。' },
+    '坤': { lines: [0, 0, 0], element: '土', symbol: '地', nature: '顺', dir: '西南',
+            keyword: '承载 · 厚德 · 成人之美',
+            desc: '坤为地，其性顺而载。主执行、主支持、主"我来兜底"。得此象者可靠度高、能聚人，代价是不善争功、容易被消耗。' }
+  };
+
+  /* 五行：性德、长处、消耗点、补位建议 */
+  const ELEMENTS = {
+    '金': { quote: '金曰从革', nature: '义',
+            strength: '讲原则、守规矩、敢下判断，是非分明。',
+            drain: '规则混乱、标准变动、要你在人情与原则之间反复折衷。',
+            advice: '把"标准"做成你的招牌：流程、清单、验收口径。缺金者宜引入一位敢说不的搭档。' },
+    '木': { quote: '木曰曲直', nature: '仁',
+            strength: '能生长、能开创、愿意投入长期的事。',
+            drain: '重复僵化、看不到成长、被要求原地踏步。',
+            advice: '给自己设"每季度一件新事"的底线。缺木者宜主动接一个从 0 到 1 的小项目。' },
+    '水': { quote: '水曰润下', nature: '智',
+            strength: '看得远、想得深，善于在信息不全时做判断。',
+            drain: '信息封闭、被要求立刻表态、没有思考空间。',
+            advice: '把判断过程外化成文档，你的价值才被看见。缺水者宜每周留一段"只思考不产出"的时间。' },
+    '火': { quote: '火曰炎上', nature: '礼',
+            strength: '感染力强、能聚人气、在台前发光。',
+            drain: '长期无人回应、孤立工作、被要求压低情绪。',
+            advice: '争取曝光位：汇报、分享、对外沟通。缺火者宜刻意练习"把成果说出来"。' },
+    '土': { quote: '土爰稼穑', nature: '信',
+            strength: '稳得住、靠得住，能把事一件件落地收口。',
+            drain: '频繁变动、方向反复、长期无根基。',
+            advice: '做那个"把事收口"的人，稀缺且被依赖。缺土者宜建立固定的节奏与复盘习惯。' }
+  };
+
+  /* 五行生克（外卦 = 时运/环境，内卦 = 自身/能力） */
+  const SHENG = { '木': '火', '火': '土', '土': '金', '金': '水', '水': '木' };
+  const KE = { '木': '土', '土': '水', '水': '火', '火': '金', '金': '木' };
+
+  const RELATION = {
+    '外生内': { label: '时运生我', tone: '顺',
+      text: '外部环境正在滋养你：资源、人脉、政策往你这边偏。这是难得的顺流期，适合主动争取那些平时不敢开口的东西——但顺境最怕"理所当然"，拿到之后记得把功劳分出去，下一次机会才还会来。' },
+    '内生外': { label: '我生时运', tone: '耗',
+      text: '这一阶段你在持续为环境付出：带新人、扛杂事、替别人补位。付出是有回报的，但你的输出大于补给，容易在半年后出现隐性枯竭。建议现在就划一条线：哪些事你必须交出去，哪些时段不接活。' },
+    '外克内': { label: '时运克我', tone: '压',
+      text: '外部环境对你形成压制：考核变严、预算收紧、或者遇到一个不认同你的上级。此时硬顶的性价比最低，正确动作是守正蓄势——把手上的事做到无可挑剔，同时把能力存起来，等窗口换。' },
+    '内克外': { label: '我克时运', tone: '进',
+      text: '你有能力主导局面，环境的不顺在你手里是可解的题。这是适合"破局"的配置：挑一件别人推不动的事做成，声望会一次建立。唯一提醒是别用力过猛，把节奏留给别人跟得上。' },
+    '比和': { label: '比和同气', tone: '稳',
+      text: '你与当下环境同频，气场相合，做事阻力小。稳是好事，但同气也意味着缺乏张力——容易在舒适区里原地打转。建议给自己加一个外部刺激：一个更难的目标，或一个更强的对手。' }
+  };
+
+  /* ============================================================
+   * 六十四卦：HEX[上卦][下卦] = { n:卦名, x:象传, t:事业提示 }
+   * （卦名矩阵已用脚本对照通行本卦名集合校验：64 / 唯一 / 无错名）
+   * ============================================================ */
+  const HEX = {
+    '乾': {
+      '乾': { n: '乾为天', x: '天行健，君子以自强不息。', m: '天体运转刚劲不休；有担当的人也当如此——靠自己持续向前，不停歇、不躺平。', t: '势能满格，宜主动立事；过刚易折，留一分回旋给别人。' },
+      '兑': { n: '履', x: '上天下泽，履；君子以辨上下，定民志。', m: '天在上、泽在下，各安其位；分清场合与身份边界，把各自的职责定位讲清楚，人心才安。', t: '如履虎尾：守规矩、不争锋，按章法走反而走得最远。' },
+      '离': { n: '同人', x: '天与火，同人；君子以类族辨物。', m: '天与火同向上行，象征同道相聚；善于分辨人与事的异同，和同频的人共事。', t: '以明聚人，同频者自然来；别为了凑数稀释你的目标。' },
+      '震': { n: '无妄', x: '天下雷行，物与无妄；先王以茂对时育万物。', m: '雷霆震于天下，万物不敢虚妄；顺时而动，实实在在地做事、培育，不掺半点假。', t: '不妄为、不妄求，按本分把事做实，反而有意外之得。' },
+      '巽': { n: '姤', x: '天下有风，姤；后以施命诰四方。', m: '风行天下，无孔不至，象征不期而遇；掌事者借此把政令传遍四方，让信息触达每个人。', t: '机遇藏在细节里：一次不期而遇，可能改写你的路径。' },
+      '坎': { n: '讼', x: '天与水违行，讼；君子以作事谋始。', m: '天向西转、水向东流，方向相背便生争执；做事要在开局就把规则谈清，免得日后打口水仗。', t: '争不如防：开局就把责任、边界、验收标准写清楚。' },
+      '艮': { n: '遁', x: '天下有山，遁；君子以远小人，不恶而严。', m: '山高天远，隐退之象；远离消耗你的人——不必翻脸，但要守住距离与原则。', t: '退一步是策略不是认输；暂避锋芒，蓄力待时。' },
+      '坤': { n: '否', x: '天地不交，否；君子以俭德辟难，不可荣以禄。', m: '天地之气互不流通，闭塞之象；此时收敛锋芒、俭朴自守，别为了利禄往风口上撞。', t: '上下不通、出力不讨好；守拙节流，别硬推。' }
+    },
+    '兑': {
+      '乾': { n: '夬', x: '泽上于天，夬；君子以施禄及下，居德则忌。', m: '泽水升上天际，终将倾泻，决断之象；得势时记得把好处分下去，切忌独占功劳、自居有德。', t: '该决断了：拖着比错着更贵。决断之后记得把利分出去。' },
+      '兑': { n: '兑为泽', x: '丽泽，兑；君子以朋友讲习。', m: '两泽相连、互相滋润；朋友之间切磋学习、共同精进，是最舒服的成长方式。', t: '以悦道相感，人脉即通路——让人舒服本身就是生产力。' },
+      '离': { n: '革', x: '泽中有火，革；君子以治历明时。', m: '泽中有火，水火相激，变革之象；动手改变之前，先看清时机成熟与否。', t: '变革窗口已开，旧法失效；换赛道要挑准时机再动。' },
+      '震': { n: '随', x: '泽中有雷，随；君子以向晦入宴息。', m: '雷潜入泽中，随季节蛰伏；人也当顺应节律——该行动时行动，该休整时休整。', t: '顺势随人，择善而从；跟对人和跟错人，差的只是一个身位。' },
+      '巽': { n: '大过', x: '泽灭木，大过；君子以独立不惧，遁世无闷。', m: '大水没过树木，负担超常；要么独立支撑、无所畏惧，要么暂且退隐也不烦闷——总之要扛得明白。', t: '担子过头容易压垮：要么加支撑，要么减负，别硬扛。' },
+      '坎': { n: '困', x: '泽无水，困；君子以致命遂志。', m: '泽中无水，困窘之象；身处困境，仍要拼尽全力守住志向，困局改不了初心。', t: '资源枯竭、话说不出去；此时拼的不是办法，是定力。' },
+      '艮': { n: '咸', x: '山上有泽，咸；君子以虚受人。', m: '山上有泽，气息相通，感应之象；以谦虚、放空的心态接纳他人，信任才会流动起来。', t: '以虚受人，感应自通：先听进去，才谈得上被接纳。' },
+      '坤': { n: '萃', x: '泽上于地，萃；君子以除戎器，戒不虞。', m: '水聚于地，人群汇聚；越是热闹聚集，越要提前备好预案，防备意料之外的事。', t: '聚合之时，人多机会也多；热闹里仍要留一手防备。' }
+    },
+    '离': {
+      '乾': { n: '大有', x: '火在天上，大有；君子以遏恶扬善，顺天休命。', m: '太阳高悬，照见万物，大丰收之象；抑制坏的、张扬好的，顺应大势把美事做成。', t: '大明当空，成果显眼；越顺越要分功于人，才能持久。' },
+      '兑': { n: '睽', x: '上火下泽，睽；君子以同而异。', m: '火向上、泽向下，方向相背；求同存异——大局上合作，细节上允许各有立场。', t: '看法相背不必强同：小处合作，大处存异。' },
+      '离': { n: '离为火', x: '明两作，离；大人以继明照于四方。', m: '光明接续升起；有影响力的人要持续发光，一层接一层照亮四方，而不是闪一下就熄灭。', t: '声名可期，靠的是持续输出，不是一次爆发。' },
+      '震': { n: '噬嗑', x: '雷电，噬嗑；先王以明罚敕法。', m: '雷电交合，如齿咬合；立规矩要清清楚楚，赏罚分明，秩序才立得住。', t: '硬骨头必须咬碎：先把规则立起来，事情才顺得下去。' },
+      '巽': { n: '鼎', x: '木上有火，鼎；君子以正位凝命。', m: '木上燃火，烹煮成器；先摆正自己的位置，再稳稳承担起使命。', t: '位正而后事成：先坐稳位置，再谈施展。' },
+      '坎': { n: '未济', x: '火在水上，未济；君子以慎辨物居方。', m: '火在水上，烧不成事；事情未成之时，更要谨慎分辨，让人、财、物各归其位。', t: '事未成，只差一口气；别急着收尾，先辨清自己站在哪。' },
+      '艮': { n: '旅', x: '山上有火，旅；君子以明慎用刑，而不留狱。', m: '火在山上蔓延不止，行旅之象；身处漂泊变动，处事要明察谨慎，案要速决、不留尾巴。', t: '客居之象，人在变动中；轻装上阵，别急着扎根。' },
+      '坤': { n: '晋', x: '明出地上，晋；君子以自昭明德。', m: '太阳跃出地面，上升之象；晋升靠的是把自己的能力与品德亮出来，让人看得见。', t: '日出地上，晋升之象：主动让人看见你的成果。' }
+    },
+    '震': {
+      '乾': { n: '大壮', x: '雷在天上，大壮；君子以非礼弗履。', m: '雷震于天，声势正盛；越强壮越要自律——不合规矩的事，一步也不踏出去。', t: '势大而不可用尽：越是有力，越要有边界。' },
+      '兑': { n: '归妹', x: '泽上有雷，归妹；君子以永终知敝。', m: '雷在泽上，婚嫁之象；开始一段长期关系（合作、婚姻、项目）之前，先想到终局可能出现的弊病。', t: '急于成事易留后患：先看终局，再许承诺。' },
+      '离': { n: '丰', x: '雷电皆至，丰；君子以折狱致刑。', m: '雷电齐至，盛大之象；鼎盛时更要果断裁决、当机立断，别在丰收里失焦。', t: '盛大之时宜果断；丰收期也是最易失焦的时候。' },
+      '震': { n: '震为雷', x: '洊雷，震；君子以恐惧修省。', m: '响雷接连而至，震动频仍；怀着敬畏反思自身，才能临危不乱。', t: '惊雷连至、变动频仍；先稳心神，再应万变。' },
+      '巽': { n: '恒', x: '雷风，恒；君子以立不易方。', m: '雷动风行，长久相随；认定的方向就坚持不换，长久才见复利。', t: '长线有回报：选定方向之后，拼的是不换赛道。' },
+      '坎': { n: '解', x: '雷雨作，解；君子以赦过宥罪。', m: '雷雨大作，郁结顿开；僵局松动之时，宽恕旧的过失，让大家轻装重新开始。', t: '僵局松动，可解可了；放下一桩旧账，腾出手来。' },
+      '艮': { n: '小过', x: '山上有雷，小过；君子以行过乎恭，丧过乎哀，用过乎俭。', m: '雷在山上，声音略过而无妨；小事上宁可稍微过头一点——礼数多一分、哀思真一分、花销省一分。', t: '小事宜谨，大事不宜过度；收敛比张扬安全。' },
+      '坤': { n: '豫', x: '雷出地奋，豫；先王以作乐崇德，殷荐之上帝，以配祖考。', m: '雷出地面，大地振奋，喜悦之象；借着喜事凝聚人心，致敬来路、感恩同行者。', t: '士气可用，宜先布势：趁热把人心聚起来。' }
+    },
+    '巽': {
+      '乾': { n: '小畜', x: '风行天上，小畜；君子以懿文德。', m: '风行天上，蓄积尚小；力量不足时，先修自己的文章与德行，攒小成大。', t: '力有未足，小积待时：先攒资本，别急着摊大。' },
+      '兑': { n: '中孚', x: '泽上有风，中孚；君子以议狱缓死。', m: '风吹泽上，感通之象；心怀诚信，处置重大事项格外慎重，给人留有余地。', t: '诚信是最硬的通行证：说到做到，胜过千言万语。' },
+      '离': { n: '家人', x: '风自火出，家人；君子以言有物而行有恒。', m: '风自火出，由内而外；说话有实在内容，做事持之以恒——小环境好了，大环境才会好。', t: '内部先稳，外事才顺：把小环境经营好。' },
+      '震': { n: '益', x: '风雷，益；君子以见善则迁，有过则改。', m: '风雷相助，增益之象；见到好的就学，发现错就改，进步就是这样一点一点来的。', t: '利在给予：帮别人就是给自己铺路，但别给到自己空。' },
+      '巽': { n: '巽为风', x: '随风，巽；君子以申命行事。', m: '风接连吹拂，无孔不入；反复申明意图，温和而持续地推进，事情才能渗透到位。', t: '以柔入之，反复申明：渗透比说服有效。' },
+      '坎': { n: '涣', x: '风行水上，涣；先王以享于帝立庙。', m: '风吹水面，涣散之象；人心散了，先立一个共同的精神符号，把大家重新聚起来。', t: '人心不齐之象：先立共识，再谈执行。' },
+      '艮': { n: '渐', x: '山上有木，渐；君子以居贤德善俗。', m: '山上之木渐渐生长；循序渐进、稳扎稳打，用时间慢慢改善环境与风气。', t: '渐进有功，急则生变：一步一台阶最稳。' },
+      '坤': { n: '观', x: '风行地上，观；先王以省方观民设教。', m: '风吹遍大地，巡视之象；先深入观察各方实情，再决定怎么引导和推动。', t: '先观察后动作；做给人看，本身也是一门功夫。' }
+    },
+    '坎': {
+      '乾': { n: '需', x: '云上于天，需；君子以饮食宴乐。', m: '云升于天，雨还未落；时机未到就安心等待，把身体和心态养好——雨总会下。', t: '时机未到，需待：等待不是空转，是养力。' },
+      '兑': { n: '节', x: '泽上有水，节；君子以制数度，议德行。', m: '泽上有水，满则溢；给资源、预算和行为都立上限与标准，节制才能长久。', t: '凡事有度，过则溢：给预算和精力设上限。' },
+      '离': { n: '既济', x: '水在火上，既济；君子以思患而豫防之。', m: '水在火上，恰好成事；越是大功告成，越要预想隐患、提前设防。', t: '事已成，守成为主；成功后最容易掉的是防备。' },
+      '震': { n: '屯', x: '云雷，屯；君子以经纶。', m: '云雷交作，草创维艰；起步期要像整理乱丝一样耐心布局，理清头绪再发力。', t: '初创艰难，如草穿地：此时要的是布局，不是冲刺。' },
+      '巽': { n: '井', x: '木上有水，井；君子以劳民劝相。', m: '树木引水上达，井水养人；把可复用的能力与资源持续供给大家，互相帮衬。', t: '井养不穷，靠的是持续：把可复用的能力挖深。' },
+      '坎': { n: '坎为水', x: '水洊至，习坎；君子以常德行，习教事。', m: '大水一波接一波，险阻重重；保持一贯的品行，反复演练应对，一关一关地过。', t: '重险叠至，稳字当头：一次过一关，别求速通。' },
+      '艮': { n: '蹇', x: '山上有水，蹇；君子以反身修德。', m: '水在山上流不动，行路艰难；卡住时先别怨环境，回头检视自己、修炼内功。', t: '行路艰难，宜反求诸己：卡住时先修内功。' },
+      '坤': { n: '比', x: '地上有水，比；先王以建万国，亲诸侯。', m: '水行地上，亲密无间；广泛结盟、亲近伙伴——站对队伍，比单打独斗高效得多。', t: '择人而依：站对队伍，比单打独斗更有效率。' }
+    },
+    '艮': {
+      '乾': { n: '大畜', x: '天在山中，大畜；君子以多识前言往行，以畜其德。', m: '山中蕴藏天大能量，大蓄积之象；多学前人的言行经验，把德行与本事攒厚。', t: '厚积者发：现在学的东西，半年后就用得上。' },
+      '兑': { n: '损', x: '山下有泽，损；君子以惩忿窒欲。', m: '泽自减以益山，减损之象；先管住脾气、压住贪念——减掉消耗，才有增益。', t: '先减掉情绪与欲望的消耗，再谈加法。' },
+      '离': { n: '贲', x: '山下有火，贲；君子以明庶政，无敢折狱。', m: '火光照亮山下，装饰之象；把各项事务打理得明明白白，但别凭外表下判断，形式要服务内容。', t: '包装有价值，但别让形式盖过内容。' },
+      '震': { n: '颐', x: '山下有雷，颐；君子以慎言语，节饮食。', m: '雷在山下闷响，如口含物；管住嘴——说话谨慎、饮食有节，养身亦养德。', t: '养正为要：口舌和身体，都要管住。' },
+      '巽': { n: '蛊', x: '山下有风，蛊；君子以振民育德。', m: '风在山下回旋不出，积弊生虫之象；弊病要主动整顿——振作士气、重建规矩。', t: '积弊已生，须整饬：先治乱，再谈发展。' },
+      '坎': { n: '蒙', x: '山下出泉，蒙；君子以果行育德。', m: '泉水初出山峦，蒙昧初开；行动要果断，同时以德育人，跟着明白人学最快。', t: '蒙昧初开，宜求学：找个好老师比自己摸索快得多。' },
+      '艮': { n: '艮为山', x: '兼山，艮；君子以思不出其位。', m: '两山重叠，稳然静止；该停就停——想法和行动，都待在自己该在的位置上。', t: '当止则止，守住本位——边界感就是你的护城河。' },
+      '坤': { n: '剥', x: '山附于地，剥；上以厚下安宅。', m: '山石剥落、侵蚀日甚；根基被蚀时，先厚待基层、稳固根本，房子才不会塌。', t: '根基被蚀，宜固本：先止损，别再往里投。' }
+    },
+    '坤': {
+      '乾': { n: '泰', x: '天地交，泰；后以财成天地之道，辅相天地之宜，以左右民。', m: '天地之气交融，通泰之象；顺势统筹资源、因势利导，帮所有人把事做成。', t: '上下通气、事事顺遂；顺境里多做那些难而正确的事。' },
+      '兑': { n: '临', x: '泽上有地，临；君子以教思无穷，容保民无疆。', m: '高地俯临水泽，君临之象；带着无尽的耐心教导和包容团队，自己走到一线去。', t: '宜亲临一线：走近现场，才拿得到真信息。' },
+      '离': { n: '明夷', x: '明入地中，明夷；君子以莅众，用晦而明。', m: '光明沉入地下，受创之象；环境不明朗时，外表收敛、内心清明——藏锋芒，不灭底线。', t: '光明受伤，宜韬光：暂时收起锋芒，别硬碰。' },
+      '震': { n: '复', x: '雷在地中，复；先王以至日闭关，商旅不行，后不省方。', m: '雷藏地中，一阳初生，回归之象；转机初现时安静休整、不折腾，让元气慢慢恢复。', t: '一阳来复，转机已现；小步试探，别一次押满。' },
+      '巽': { n: '升', x: '地中生木，升；君子以顺德，积小以高大。', m: '树木自地中生出，步步升高；顺着规律生长，靠积小成大，不指望一步登天。', t: '顺势上升，积小成高：靠的是日拱一卒。' },
+      '坎': { n: '师', x: '地中有水，师；君子以容民畜众。', m: '水藏地中，蓄众之象；带队伍靠包容与储备——纪律和体恤，缺一不可。', t: '用众之道，纪律第一：带人先立规矩。' },
+      '艮': { n: '谦', x: '地中有山，谦；君子以裒多益寡，称物平施。', m: '山藏地中，内高外低，谦卑之象；拿多的补少的，公平分配——有本事，但不显摆。', t: '谦受益、满招损：有功不居，路越走越宽。' },
+      '坤': { n: '坤为地', x: '地势坤，君子以厚德载物。', m: '大地宽厚，承载万物；像大地一样以深厚的德行兜住人和事——能承载的人，走得最远。', t: '承载为先：能兜住事的人，最后拿到的最多。' }
+    }
+  };
+
+  return { TRIGRAMS, ELEMENTS, HEX, SHENG, KE, RELATION };
+})();
+
+</script>
+<script>
+/* ============================================================
+ * 事业运测评 · 题库 v2（文案精简版）
+ * ------------------------------------------------------------
+ * 三个模块，共 15 题。每题均附 basis（题源说明），供解析页展开。
+ *   模块一（1-5）  禀赋·五行  → 单选：金 / 木 / 水 / 火 / 土
+ *   模块二（6-10） 性情·四象  → 五点量表：E/I、S/N、T/F、J/P、开放性
+ *   模块三（11-15）志业·六趣  → 强迫选择：RIASEC 六型
+ * ============================================================ */
+
+window.QUIZ = (function () {
+
+  const MODULES = [
+    { id: 1, name: '禀赋 · 五行', range: [1, 5], color: 'mint',
+      blurb: '5 题，看你天生靠什么发力。取自《尚书·洪范》五行性德。',
+      basis: '取自《尚书·洪范》五行性德："水曰润下，火曰炎上，木曰曲直，金曰从革，土爰稼穑。"\n先哲以五种物质的运动方式比喻人的五种禀赋，后世中医与相术沿此立论。本模块据此测你的主导行为倾向，用于推「外卦」（时运与环境位）。' },
+    { id: 2, name: '性情 · 四象', range: [6, 10], color: 'sky',
+      blurb: '5 题，看你习惯怎么想事、怎么决断。取自荣格心理类型。',
+      basis: '取自荣格《心理类型》的三种态度/机能二分，即 MBTI 的四维度：精力指向（E/I）、信息获取（S/N）、决策依据（T/F）、生活态度（J/P）。\n注：本模块为 5 题简版自评，非标准 MBTI 施测（标准版每维度 5 题以上），结果仅供倾向参考，不作人格诊断。第 10 题参考大五人格（OCEAN）的「开放性」维度。' },
+    { id: 3, name: '志业 · 六趣', range: [11, 15], color: 'sun',
+      blurb: '5 题，看什么事你做起来不累。取自霍兰德职业兴趣六型。',
+      basis: '取自霍兰德（John L. Holland）职业兴趣理论 RIASEC 六型：现实型 R、研究型 I、艺术型 A、社会型 S、企业型 E、常规型 C。\n本模块采用「强迫选择法」——每题必须且只能选一项，强制暴露你的真实偏好而非"都想要"。用于推「内卦」（自身与能力位）。' }
+  ];
+
+  const QUESTIONS = [
+    /* ---------- 模块一：禀赋 · 五行 ---------- */
+    {
+      id: 1, module: 1, type: 'single',
+      stem: '遇到一个新机会，你的第一反应是？',
+      basis: '测「起动方式」。人对新事物的第一反应最难伪装，是判断主导禀赋最有效的入口。',
+      options: [
+        { key: 'A', text: '先看规矩和风险', tag: '金' },
+        { key: 'B', text: '先小范围试一把', tag: '木' },
+        { key: 'C', text: '先摸清局势再动', tag: '水' },
+        { key: 'D', text: '拉人马上就干', tag: '火' },
+        { key: 'E', text: '先稳住手上的活', tag: '土' }
+      ]
+    },
+    {
+      id: 2, module: 1, type: 'single',
+      stem: '在团队里说话，你更像哪种？',
+      basis: '《洪范》以五行配五常（金义、木仁、水智、火礼、土信）。说话方式是五常的外显，比自我描述更客观。',
+      options: [
+        { key: 'A', text: '直接给结论，不绕弯', tag: '金' },
+        { key: 'B', text: '讲它以后能长成啥样', tag: '木' },
+        { key: 'C', text: '看人下菜，先听清楚', tag: '水' },
+        { key: 'D', text: '带气氛，把劲儿鼓起来', tag: '火' },
+        { key: 'E', text: '慢慢说清细节', tag: '土' }
+      ]
+    },
+    {
+      id: 3, module: 1, type: 'single',
+      stem: '做重要决定，你最信什么？',
+      basis: '决策依据反映价值观排序。金重规范、木重成长、水重推演、火重共识、土重经验，是五行人格的核心分野。',
+      options: [
+        { key: 'A', text: '原则和先例', tag: '金' },
+        { key: 'B', text: '值不值得长期做', tag: '木' },
+        { key: 'C', text: '几种可能都算一遍', tag: '水' },
+        { key: 'D', text: '现场大家的反应', tag: '火' },
+        { key: 'E', text: '过往经验稳不稳', tag: '土' }
+      ]
+    },
+    {
+      id: 4, module: 1, type: 'single',
+      stem: '哪种状况最耗你？',
+      basis: '消耗点比长处更能定位禀赋：人总在自己最在乎的地方受伤。职业规划咨询常用这题反向校验。',
+      options: [
+        { key: 'A', text: '标准说变就变', tag: '金' },
+        { key: 'B', text: '日复一日没成长', tag: '木' },
+        { key: 'C', text: '信息封闭没法判断', tag: '水' },
+        { key: 'D', text: '做得好也没人看见', tag: '火' },
+        { key: 'E', text: '方向反复横跳', tag: '土' }
+      ]
+    },
+    {
+      id: 5, module: 1, type: 'single',
+      stem: '同事最常怎么夸你？',
+      basis: '外部评价题：用他人视角校准自评偏差，避免"我想成为的样子"混进结果。',
+      options: [
+        { key: 'A', text: '讲原则，拒绝得很清楚', tag: '金' },
+        { key: 'B', text: '有想法，能开新局', tag: '木' },
+        { key: 'C', text: '脑子活，看得远', tag: '水' },
+        { key: 'D', text: '有热情，能带气氛', tag: '火' },
+        { key: 'E', text: '稳得住，交给他放心', tag: '土' }
+      ]
+    },
+
+    /* ---------- 模块二：性情 · 四象 ---------- */
+    {
+      id: 6, module: 2, type: 'scale', dim: 'EI', positive: 'E',
+      stem: '不熟的聚会上，我会主动去认识新的人。',
+      basis: '荣格「精力指向」维度（E/I）：能量是从外部互动中补充，还是从独处中恢复。和"会不会说话"无关。',
+      scale: ['很不像我', '不太像', '说不好', '比较像', '很像我']
+    },
+    {
+      id: 7, module: 2, type: 'scale', dim: 'SN', positive: 'S',
+      stem: '我更信看得见的数据，而不是直觉。',
+      basis: '荣格「信息获取」维度（S/N）：偏实感者处理具体经验，偏直觉者处理模式与可能性。',
+      scale: ['很不像我', '不太像', '说不好', '比较像', '很像我']
+    },
+    {
+      id: 8, module: 2, type: 'scale', dim: 'TF', positive: 'T',
+      stem: '评方案先看逻辑成立，再看人舒不舒服。',
+      basis: '荣格「决策依据」维度（T/F）：先看事的合理性，还是先看人的感受。两者无高下。',
+      scale: ['很不像我', '不太像', '说不好', '比较像', '很像我']
+    },
+    {
+      id: 9, module: 2, type: 'scale', dim: 'JP', positive: 'J',
+      stem: '喜欢提前定好计划，临时变动会烦。',
+      basis: '荣格「生活态度」维度（J/P）：倾向收口定案，还是保留选项。影响你在混乱期与执行期的适配度。',
+      scale: ['很不像我', '不太像', '说不好', '比较像', '很像我']
+    },
+    {
+      id: 10, module: 2, type: 'scale', dim: 'OPEN', positive: 'Q',
+      stem: '遇到突发状况，我更兴奋而不是烦躁。',
+      basis: '延伸维度，参考大五人格（OCEAN）的「开放性」。高分者为应变型（Q），低分者为守成型（A）。',
+      scale: ['很不像我', '不太像', '说不好', '比较像', '很像我']
+    },
+
+    /* ---------- 模块三：志业 · 六趣 ---------- */
+    {
+      id: 11, module: 3, type: 'choice',
+      stem: '不用考虑收入，你最想做什么？',
+      basis: '「无约束偏好」是职业兴趣理论的标准问法：剥离收入、评价等外部因素后，剩下的才是真实兴趣核。',
+      options: [
+        { key: 'A', text: '亲手做出一个能用的东西', tag: 'R' },
+        { key: 'B', text: '把一个想不通的问题搞明白', tag: 'I' },
+        { key: 'C', text: '创作一个完全属于我的作品', tag: 'A' }
+      ]
+    },
+    {
+      id: 12, module: 3, type: 'choice',
+      stem: '在团队里，你最容易成为谁？',
+      basis: '角色自发型：人在群体中不假思索占据的位置，往往就是兴趣与能力的交集。',
+      options: [
+        { key: 'A', text: '照顾大家情绪的那个人', tag: 'S' },
+        { key: 'B', text: '推动目标、敢拍板的人', tag: 'E' },
+        { key: 'C', text: '守住流程、不出错的人', tag: 'C' }
+      ]
+    },
+    {
+      id: 13, module: 3, type: 'choice',
+      stem: '哪类活你做起来最不累？',
+      basis: '用「疲劳度」反推兴趣：真正匹配的事消耗感低，不匹配的事即使擅长也会疲惫。',
+      options: [
+        { key: 'A', text: '动手解决现场问题', tag: 'R' },
+        { key: 'B', text: '把乱数据理成清晰表格', tag: 'C' },
+        { key: 'C', text: '说服难搞的人，促成合作', tag: 'E' }
+      ]
+    },
+    {
+      id: 14, module: 3, type: 'choice',
+      stem: '哪种时刻最有成就感？',
+      basis: '成就感来源是职业锚（Career Anchor）的简化测法：你想要的是"想通"、"被看见"还是"有用"。',
+      options: [
+        { key: 'A', text: '复杂问题终于想通了', tag: 'I' },
+        { key: 'B', text: '作品被看见，有人被打到', tag: 'A' },
+        { key: 'C', text: '确实帮到了某个具体的人', tag: 'S' }
+      ]
+    },
+    {
+      id: 15, module: 3, type: 'choice',
+      stem: '五年后，你希望别人怎么介绍你？',
+      basis: '收束题，六选项全型对照：用「理想身份」做一次总校验，可检出前四题的随机作答。',
+      options: [
+        { key: 'A', text: '能干事的人', tag: 'R' },
+        { key: 'B', text: '看得透的人', tag: 'I' },
+        { key: 'C', text: '有品味的人', tag: 'A' },
+        { key: 'D', text: '能聚人的人', tag: 'S' },
+        { key: 'E', text: '敢拍板的人', tag: 'E' },
+        { key: 'F', text: '靠得住的人', tag: 'C' }
+      ]
+    }
+  ];
+
+  /* 霍兰德六型释义 */
+  const HOLLAND = {
+    'R': { name: '现实型', en: 'Realistic', keyword: '动手 · 落地 · 结果可见',
+           fit: '现场运营、工程实施、技术运维、供应链、门店管理、手作与实体经营',
+           risk: '容易陷在具体事务里，长期不做抽象总结，会把自己做成"谁都能替代的执行者"。' },
+    'I': { name: '研究型', en: 'Investigative', keyword: '钻研 · 分析 · 想明白',
+           fit: '数据分析、风控合规、产品研究、财务分析、技术架构、咨询',
+           risk: '容易追求完备而迟迟不交卷；你的瓶颈通常不是想得不够，是收口太晚。' },
+    'A': { name: '艺术型', en: 'Artistic', keyword: '创作 · 审美 · 非共识',
+           fit: '品牌内容、设计、策划、用户体验、新媒体、培训课件开发',
+           risk: '对流水线式工作耐受度低；需要主动为自己争取"可创作的空间"，否则会迅速倦怠。' },
+    'S': { name: '社会型', en: 'Social', keyword: '助人 · 协调 · 关系',
+           fit: '人力资源、客户成功、教育培训、行政服务、团队管理、社区运营',
+           risk: '过度承接他人情绪与事务，是这一型最典型的耗损方式；需要学会把"帮忙"变成"授权"。' },
+    'E': { name: '企业型', en: 'Enterprising', keyword: '影响 · 经营 · 拿结果',
+           fit: '业务拓展、项目管理、经营分析、创业、渠道与商务、团队负责人',
+           risk: '容易高估速度、低估阻力；真正的短板往往在"把成果沉淀成制度"。' },
+    'C': { name: '常规型', en: 'Conventional', keyword: '规范 · 精确 · 稳定',
+           fit: '财务、审计、合规、证照与档案管理、数据治理、流程建设、运营支持',
+           risk: '价值常被低估，因为"没出事"看起来等于"没做事"；必须让流程成果可视化。' }
+  };
+
+  /* 霍兰德 → 内卦（自身位）的映射
+   * 依据《说卦传》八卦取象：艮为手为止（成物）、坎为隐伏（深究）、
+   * 离为丽为明（文采显扬）、坤为众为载（承载他人）、
+   * 乾为君为健（主导进取）、巽为入为绳直（循序而入）。
+   * 说明：此配属为本项目依卦象义理所设的启发式对应，非古籍固定配属。 */
+  const HOLLAND_TO_TRIGRAM = { 'R': '艮', 'I': '坎', 'A': '离', 'S': '坤', 'E': '乾', 'C': '巽' };
+
+  /* 五行 → 外卦（时运位）：先按后天八卦五行配属定其二，
+   * 再以 E/I 取「外显」或「内敛」之一卦。坎、离独卦者不计。
+   * 乾兑属金、震巽属木、坎属水、离属火、艮坤属土。 */
+  const ELEMENT_TO_TRIGRAM = {
+    '金': { E: '乾', I: '兑' },
+    '木': { E: '震', I: '巽' },
+    '水': { E: '坎', I: '坎' },
+    '火': { E: '离', I: '离' },
+    '土': { E: '坤', I: '艮' }
+  };
+
+  /* MBTI 四维度释义：中点为 3 分，高于 3 取 positive，等于 3 记 "—"（均衡） */
+  const DIMENSIONS = {
+    'EI': { a: 'E 外向', b: 'I 内向',
+            desc: 'E 从互动中获得能量，适合高频协作与对外岗位；I 从独处中恢复，适合深度产出与独立负责。' },
+    'SN': { a: 'S 实感', b: 'N 直觉',
+            desc: 'S 信事实与细节，擅长把事做扎实；N 信模式与可能，擅长看出下一步。' },
+    'TF': { a: 'T 思考', b: 'F 情感',
+            desc: 'T 以逻辑与标准决断，适合定规则、做取舍；F 以价值与关系决断，适合凝聚与协调。' },
+    'JP': { a: 'J 判断', b: 'P 知觉',
+            desc: 'J 追求收口与确定性，是执行期的压舱石；P 保留选项与弹性，是混沌期的探路者。' },
+    'OPEN': { a: 'Q 应变', b: 'A 守成',
+              desc: 'Q 在变化中兴奋，适合拓荒与新业务；A 在稳定中高效，适合深耕与守成。（参考大五「开放性」）' }
+  };
+
+  return { MODULES, QUESTIONS, HOLLAND, HOLLAND_TO_TRIGRAM, ELEMENT_TO_TRIGRAM, DIMENSIONS };
+})();
+
+</script>
+<script>
+/* ============================================================
+ * 事业运测评 · 主逻辑 v2
+ * 无依赖、纯前端、本机计算。
+ * ============================================================ */
+(function () {
+  'use strict';
+
+  const Q = window.QUIZ;
+  const H = window.HEX_DATA;
+  const QUESTIONS = Q.QUESTIONS;
+  const TOTAL = QUESTIONS.length;
+  const STORE_KEY = 'career_fortune_v2';
+
+  const EL_ORDER = ['金', '木', '水', '火', '土'];
+  const EL_COLOR = { '金': '#e0b155', '木': '#4caf7d', '水': '#4aa8e0', '火': '#ff8f6b', '土': '#b98a6a' };
+  const HEX_COLOR = { 'R': '#35c1a0', 'I': '#4aa8e0', 'A': '#ff8f6b', 'S': '#9b87e0', 'E': '#f5a623', 'C': '#5c9ea8' };
+
+  let state = { answers: {}, idx: 0, result: null };
+  let advanceTimer = null;
+
+  const CHECK_SVG = '<svg class="opt-check" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">' +
+    '<circle cx="9" cy="9" r="9" fill="#35c1a0"/>' +
+    '<path d="M5 9.3l2.6 2.6L13 6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+    '</svg>';
+
+  /* ---------------- 存储 ---------------- */
+  function save() {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify({ answers: state.answers, idx: state.idx })); } catch (e) {}
+  }
+  function load() {
+    try {
+      const raw = localStorage.getItem(STORE_KEY);
+      if (!raw) return;
+      const d = JSON.parse(raw);
+      if (d && d.answers) { state.answers = d.answers; state.idx = d.idx || 0; }
+    } catch (e) {}
+  }
+
+  /* ---------------- 屏幕 ---------------- */
+  function show(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 1900);
+  }
+
+  /* ---------------- 背景漂浮装饰 ---------------- */
+  function initFloaties() {
+    const box = document.getElementById('floaties');
+    if (!box) return;
+    const colors = ['#35c1a0', '#ff8f6b', '#56b2e8', '#9b87e0', '#ffc44d'];
+    let html = '';
+    for (let i = 0; i < 9; i++) {
+      const size = 6 + (i % 4) * 5;
+      const c = colors[i % colors.length];
+      const left = (4 + (i * 11.3) % 92).toFixed(1);
+      const top = (6 + (i * 17.7) % 86).toFixed(1);
+      const dur = (9 + (i % 5) * 2.5).toFixed(1);
+      const op = (0.16 + (i % 3) * 0.06).toFixed(2);
+      html += `<span class="floaty" style="width:${size}px;height:${size}px;left:${left}%;top:${top}%;` +
+              `background:${c};opacity:${op};animation-duration:${dur}s;animation-delay:-${(i * 1.4).toFixed(1)}s"></span>`;
+    }
+    box.innerHTML = html;
+  }
+
+  /* ---------------- 封面：三张可翻转模块卡 ---------------- */
+  const PICK_ICONS = {
+    1: '<svg class="pick-emoji" viewBox="0 0 34 34" aria-hidden="true">' +
+       '<circle cx="17" cy="17" r="4.6" fill="#35c1a0"/>' +
+       '<circle cx="17" cy="6" r="3" fill="#e0b155"/><circle cx="27.5" cy="13.6" r="3" fill="#4caf7d"/>' +
+       '<circle cx="23.5" cy="25.9" r="3" fill="#4aa8e0"/><circle cx="10.5" cy="25.9" r="3" fill="#ff8f6b"/>' +
+       '<circle cx="6.5" cy="13.6" r="3" fill="#b98a6a"/></svg>',
+    2: '<svg class="pick-emoji" viewBox="0 0 34 34" aria-hidden="true">' +
+       '<rect x="6" y="6" width="9.5" height="9.5" rx="2.6" fill="#35c1a0"/>' +
+       '<rect x="18.5" y="6" width="9.5" height="9.5" rx="2.6" fill="#56b2e8"/>' +
+       '<rect x="6" y="18.5" width="9.5" height="9.5" rx="2.6" fill="#ffc44d"/>' +
+       '<rect x="18.5" y="18.5" width="9.5" height="9.5" rx="2.6" fill="#9b87e0"/></svg>',
+    3: '<svg class="pick-emoji" viewBox="0 0 34 34" aria-hidden="true">' +
+       '<circle cx="17" cy="6" r="3.4" fill="#35c1a0"/><circle cx="26.5" cy="11.5" r="3.4" fill="#4aa8e0"/>' +
+       '<circle cx="26.5" cy="22.5" r="3.4" fill="#ff8f6b"/><circle cx="17" cy="28" r="3.4" fill="#9b87e0"/>' +
+       '<circle cx="7.5" cy="22.5" r="3.4" fill="#f5a623"/><circle cx="7.5" cy="11.5" r="3.4" fill="#5c9ea8"/></svg>'
+  };
+
+  function renderPicks() {
+    const box = document.getElementById('pickRow');
+    if (!box) return;
+    box.innerHTML = Q.MODULES.map(m =>
+      `<div class="pick" data-c="${m.id}" role="button" tabindex="0" aria-label="${m.name}">
+        <div class="pick-inner">
+          <div class="pick-face pick-front">
+            ${PICK_ICONS[m.id]}
+            <div class="pick-name">${m.name}</div>
+            <div class="pick-sub">${m.range[0]}–${m.range[1]} 题</div>
+            <div class="pick-hint">翻一下</div>
+          </div>
+          <div class="pick-face pick-back">${m.blurb}</div>
+        </div>
+      </div>`).join('');
+
+    box.querySelectorAll('.pick').forEach(el => {
+      const flip = () => el.classList.toggle('flipped');
+      el.addEventListener('click', flip);
+      el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); } });
+    });
+  }
+
+  /* ---------------- 进度珠 ---------------- */
+  function renderBeads() {
+    const box = document.getElementById('beads');
+    if (!box) return;
+    let html = '';
+    for (let i = 1; i <= TOTAL; i++) html += `<span class="bead" data-i="${i}"></span>`;
+    box.innerHTML = html;
+  }
+  function updateBeads(id) {
+    document.querySelectorAll('#beads .bead').forEach(b => {
+      const i = parseInt(b.dataset.i, 10);
+      b.classList.toggle('done', i < id);
+      b.classList.toggle('cur', i === id);
+    });
+  }
+
+  /* ---------------- 答题 ---------------- */
+  function moduleOf(id) {
+    return Q.MODULES.find(m => id >= m.range[0] && id <= m.range[1]);
+  }
+
+  function renderQuestion() {
+    const i = state.idx;
+    const q = QUESTIONS[i];
+    const mod = moduleOf(q.id);
+    const card = document.getElementById('questionCard');
+
+    document.getElementById('progressNum').textContent = q.id;
+    document.getElementById('moduleName').textContent = mod ? mod.name : '';
+    document.getElementById('progressFill').style.width = ((q.id - 1) / TOTAL * 100) + '%';
+    updateBeads(q.id);
+
+    const picked = state.answers[q.id];
+    let body = '';
+
+    if (q.type === 'scale') {
+      body = `<div class="scale-wrap">` + q.scale.map((label, k) => {
+        const v = k + 1;
+        return `<div class="scale-item${picked === v ? ' on' : ''}" data-val="${v}">
+          <span class="scale-num">${v}</span>${label}</div>`;
+      }).join('') + `</div>
+      <div class="scale-ends"><span>不像我</span><span>很像我</span></div>`;
+    } else {
+      body = `<div class="options">` + q.options.map(o => {
+        return `<div class="option${picked === o.key ? ' on' : ''}" data-key="${o.key}">
+          <div class="opt-key">${o.key}</div><div>${o.text}</div>${CHECK_SVG}</div>`;
+      }).join('') + `</div>`;
+    }
+
+    const CAT_SVG = `<svg viewBox="0 0 92 70" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22 30 L27 10 L38 24 Z" fill="#ffc9a3"/>
+        <path d="M70 30 L65 10 L54 24 Z" fill="#ffc9a3"/>
+        <path d="M25.5 26 L28.5 15.5 L34.5 23 Z" fill="#ff9d7a"/>
+        <path d="M66.5 26 L63.5 15.5 L57.5 23 Z" fill="#ff9d7a"/>
+        <ellipse cx="46" cy="42" rx="27" ry="23" fill="#ffc9a3"/>
+        <path d="M40 20 q2 6 0 11" stroke="#ff9d7a" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M46 19 q2 6 0 12" stroke="#ff9d7a" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M52 20 q2 6 0 11" stroke="#ff9d7a" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <circle cx="36" cy="44" r="2.8" fill="#6b4f3f"/>
+        <circle cx="56" cy="44" r="2.8" fill="#6b4f3f"/>
+        <circle cx="37.2" cy="42.8" r="1" fill="#fff"/>
+        <circle cx="57.2" cy="42.8" r="1" fill="#fff"/>
+        <ellipse cx="29" cy="51" rx="4" ry="2.6" fill="#ffb3ba" opacity=".75"/>
+        <ellipse cx="63" cy="51" rx="4" ry="2.6" fill="#ffb3ba" opacity=".75"/>
+        <path d="M42 50 q4 4 8 0" stroke="#6b4f3f" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M46 47 l0 4" stroke="#6b4f3f" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 42 L22 44 M12 50 L22 49" stroke="#e8b58c" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M80 42 L70 44 M80 50 L70 49" stroke="#e8b58c" stroke-width="1.6" stroke-linecap="round"/>
+        <ellipse cx="34" cy="65" rx="9" ry="5" fill="#ffc9a3"/>
+        <ellipse cx="58" cy="65" rx="9" ry="5" fill="#ffc9a3"/>
+        <path d="M31 62 l0 5 M34 62.5 l0 5 M55 62.5 l0 5 M58 62 l0 5" stroke="#f0a87c" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>`;
+
+    card.innerHTML =
+      `<div class="cat-zone" aria-hidden="true"><div class="peek-cat">${CAT_SVG}</div></div>` +
+      `<div class="q-in">
+         <div class="q-tag">第 ${q.id} 题 · ${mod ? mod.name : ''}</div>
+         <h2 class="q-stem">${q.stem}</h2>
+         ${body}
+         <details class="basis"><summary>这题在测什么</summary>
+           <div class="basis-body">${q.basis}</div>
+         </details>
+       </div>`;
+
+    card.querySelectorAll('.option').forEach(el => {
+      el.addEventListener('click', () => pick(q.id, el.dataset.key, el));
+    });
+    card.querySelectorAll('.scale-item').forEach(el => {
+      el.addEventListener('click', () => pick(q.id, parseInt(el.dataset.val, 10), el));
+    });
+
+    document.getElementById('btnPrev').style.visibility = i === 0 ? 'hidden' : 'visible';
+    const next = document.getElementById('btnNext');
+    next.textContent = i === TOTAL - 1 ? '生成我的卦' : '下一题';
+    next.disabled = (picked === undefined);
+  }
+
+  /* 选中：只改选中态，不整卡重绘，避免闪烁；短延迟后自动推进 */
+  function pick(id, val, el) {
+    state.answers[id] = val;
+    const card = document.getElementById('questionCard');
+    card.querySelectorAll('.option, .scale-item').forEach(x => x.classList.remove('on'));
+    el.classList.add('on');
+    document.getElementById('btnNext').disabled = false;
+    save();
+    clearTimeout(advanceTimer);
+    advanceTimer = setTimeout(advance, 420);
+  }
+
+  function advance() {
+    clearTimeout(advanceTimer);
+    if (state.idx < TOTAL - 1) { state.idx++; renderQuestion(); save(); }
+  }
+
+  /* ---------------- 起卦动画 ---------------- */
+  function castThen(done) {
+    const box = document.getElementById('casting');
+    box.style.display = 'flex';
+    box.classList.remove('hide');
+    setTimeout(() => {
+      box.classList.add('hide');
+      setTimeout(() => { box.style.display = 'none'; done(); }, 340);
+    }, 1500);
+  }
+
+  /* ---------------- 计分 ---------------- */
+  function compute() {
+    const a = state.answers;
+
+    /* 五行 */
+    const el = { '金': 0, '木': 0, '水': 0, '火': 0, '土': 0 };
+    QUESTIONS.filter(q => q.module === 1).forEach(q => {
+      const opt = q.options.find(o => o.key === a[q.id]);
+      if (opt) el[opt.tag] += 2;
+    });
+    const elSorted = EL_ORDER.slice().sort((x, y) => el[y] - el[x]); // 同分按金木水火土
+    const main = elSorted[0], second = elSorted[1], weak = elSorted[elSorted.length - 1];
+
+    /* 性格四维度 */
+    const dims = {};
+    QUESTIONS.filter(q => q.module === 2).forEach(q => {
+      const score = a[q.id] || 3;
+      const D = Q.DIMENSIONS[q.dim];
+      const aL = D.a[0], bL = D.b[0];
+      const other = (q.positive === aL) ? bL : aL;
+      const letter = score >= 3 ? q.positive : other;
+      dims[q.dim] = { score: score, letter: letter, strength: (score - 3) / 2, D: D };
+    });
+    const code = ['EI', 'SN', 'TF', 'JP'].map(d => dims[d].letter).join('');
+    const openLetter = dims['OPEN'].letter;
+
+    /* 霍兰德 */
+    const hol = { 'R': 0, 'I': 0, 'A': 0, 'S': 0, 'E': 0, 'C': 0 };
+    QUESTIONS.filter(q => q.module === 3).forEach(q => {
+      const opt = q.options.find(o => o.key === a[q.id]);
+      if (opt) hol[opt.tag] += 3;
+    });
+    const holSorted = Object.keys(hol).slice().sort((x, y) => hol[y] - hol[x]);
+    const top3 = holSorted.slice(0, 3);
+    const holTotal = Object.values(hol).reduce((s, v) => s + v, 0) || 1;
+
+    /* 卦象：上卦（时运）= 五行主行 × E/I；下卦（能力）= 霍兰德主型 */
+    const outer = Q.ELEMENT_TO_TRIGRAM[main][dims['EI'].letter];
+    const inner = Q.HOLLAND_TO_TRIGRAM[top3[0]];
+    const hex = H.HEX[outer][inner];
+
+    /* 五行生克关系 */
+    const oEl = H.TRIGRAMS[outer].element, iEl = H.TRIGRAMS[inner].element;
+    let relKey;
+    if (oEl === iEl) relKey = '比和';
+    else if (H.SHENG[oEl] === iEl) relKey = '外生内';
+    else if (H.SHENG[iEl] === oEl) relKey = '内生外';
+    else if (H.KE[oEl] === iEl) relKey = '外克内';
+    else relKey = '内克外';
+    const rel = H.RELATION[relKey];
+
+    return { el, elSorted, main, second, weak, dims, code, openLetter,
+             hol, holSorted, top3, holTotal, outer, inner, hex, oEl, iEl, relKey, rel };
+  }
+
+  /* ---------------- 卦画 ---------------- */
+  function hexFigure(outer, inner) {
+    const o = H.TRIGRAMS[outer].lines, n = H.TRIGRAMS[inner].lines;
+    const seq = [o[2], o[1], o[0], n[2], n[1], n[0]]; // 自上而下
+    const rows = seq.map(l => l === 1
+      ? `<div class="yao-row"><div class="yao yang"></div></div>`
+      : `<div class="yao-row"><div class="yao yin"></div><div class="yao yin"></div></div>`
+    ).join('');
+    return `<div class="hex-figure">${rows}
+      <div class="hex-side"><span>上卦 · ${outer}（时运）</span><span>下卦 · ${inner}（能力）</span></div>
+    </div>`;
+  }
+
+  /* ---------------- 五行雷达 ---------------- */
+  function radar(el) {
+    const R = 58, cx = 78, cy = 74;
+    const max = Math.max(4, Math.max.apply(null, EL_ORDER.map(k => el[k])));
+    const pt = (i, r) => {
+      const ang = -Math.PI / 2 + i * (2 * Math.PI / 5);
+      return [cx + r * Math.cos(ang), cy + r * Math.sin(ang)];
+    };
+    const poly = (r) => EL_ORDER.map((_, i) => pt(i, r).map(n => n.toFixed(1)).join(',')).join(' ');
+    let grid = '';
+    [0.33, 0.66, 1].forEach(f => {
+      grid += `<polygon points="${poly(R * f)}" fill="none" stroke="#ece7de" stroke-width="1"/>`;
+    });
+    EL_ORDER.forEach((_, i) => {
+      const p = pt(i, R);
+      grid += `<line x1="${cx}" y1="${cy}" x2="${p[0].toFixed(1)}" y2="${p[1].toFixed(1)}" stroke="#ece7de" stroke-width="1"/>`;
+    });
+    const dataPts = EL_ORDER.map((k, i) => pt(i, R * (el[k] / max)).map(n => n.toFixed(1)).join(',')).join(' ');
+    let dots = '', labels = '';
+    EL_ORDER.forEach((k, i) => {
+      const p = pt(i, R * (el[k] / max));
+      dots += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3.5" fill="${EL_COLOR[k]}"/>`;
+      const lp = pt(i, R + 15);
+      labels += `<text x="${lp[0].toFixed(1)}" y="${(lp[1] + 4).toFixed(1)}" font-size="12"
+        font-family="PingFang SC, Microsoft YaHei, sans-serif" font-weight="700" fill="#6b6577" text-anchor="middle">${k}</text>`;
+    });
+    return `<svg class="radar" width="156" height="148" viewBox="0 0 156 148">
+      ${grid}
+      <polygon points="${dataPts}" fill="rgba(53,193,160,.20)" stroke="#35c1a0" stroke-width="1.8" stroke-linejoin="round"/>
+      ${dots}${labels}
+    </svg>`;
+  }
+
+  /* ---------------- 结果渲染 ---------------- */
+  function renderResult() {
+    const r = compute();
+    state.result = r;
+    const T = H.TRIGRAMS, E = H.ELEMENTS, HO = Q.HOLLAND;
+
+    /* 卦 */
+    const hexHtml = `
+      <div class="result-hero">
+        <div class="r-label">给 你 的 卦</div>
+        <div class="r-hex-name">${r.hex.n}</div>
+        <div class="r-hex-meta">${r.outer}上${r.inner}下 · ${T[r.outer].symbol} / ${T[r.inner].symbol}</div>
+      </div>
+      ${hexFigure(r.outer, r.inner)}
+      <div class="xiang">${r.hex.x}</div>
+      <div class="xiang-src">——《周易·象传》原文</div>
+      ${r.hex.m ? `<div class="xiang-modern"><span class="xm-tag">今译</span>${r.hex.m}</div>` : ''}`;
+
+    /* 内外卦拆解 */
+    const splitHtml = `
+      <div class="card block">
+        <h3 class="block-title">这卦是怎么来的 <i>HOW</i></h3>
+        <div class="split">
+          <div class="split-item">
+            <div class="split-pos">上卦 · 时运位</div>
+            <div class="split-tri">${r.outer}为${T[r.outer].symbol}<span>${r.oEl}行</span></div>
+            <div class="split-desc">由五行主行「${r.main}」+ 内外向「${r.dims['EI'].letter}」推出：${T[r.outer].keyword}。</div>
+          </div>
+          <div class="split-item">
+            <div class="split-pos">下卦 · 能力位</div>
+            <div class="split-tri">${r.inner}为${T[r.inner].symbol}<span>${HO[r.top3[0]].name}</span></div>
+            <div class="split-desc">由职业兴趣主型「${HO[r.top3[0]].name}」推出：${T[r.inner].keyword}。</div>
+          </div>
+        </div>
+      </div>`;
+
+    /* 五行 */
+    const elMax = Math.max(4, Math.max.apply(null, EL_ORDER.map(k => r.el[k])));
+    const tagOf = k => k === r.main ? '<span class="el-tag main">主</span>'
+      : (k === r.second ? '<span class="el-tag sec">次</span>'
+      : (k === r.weak ? '<span class="el-tag weak">弱</span>' : ''));
+    const legend = EL_ORDER.map(k =>
+      `<div class="el-row">
+        <span class="el-dot" style="background:${EL_COLOR[k]}"></span>
+        <span class="el-name">${k}</span>
+        <span class="el-bar"><span style="width:${(r.el[k] / elMax * 100).toFixed(0)}%;background:${EL_COLOR[k]}"></span></span>
+        <span class="el-val">${r.el[k]}</span>${tagOf(k)}
+      </div>`).join('');
+    const elHtml = `
+      <div class="card block">
+        <h3 class="block-title">你天生靠什么发力 <i>五行</i></h3>
+        <div class="radar-wrap">${radar(r.el)}<div class="el-legend">${legend}</div></div>
+        <div class="advice" style="margin-top:14px">
+          <div class="advice-h"><span class="badge badge-shun">主行</span>${r.main} · ${E[r.main].quote}</div>
+          <div class="advice-t">${E[r.main].nature}性。${E[r.main].strength}</div>
+        </div>
+        <div class="advice bi">
+          <div class="advice-h"><span class="badge badge-bi">弱行</span>${r.weak} · 补位建议</div>
+          <div class="advice-t">${E[r.weak].advice}</div>
+        </div>
+      </div>`;
+
+    /* 性格维度 */
+    const dimRows = ['EI', 'SN', 'TF', 'JP', 'OPEN'].map(d => {
+      const it = r.dims[d];
+      const aL = it.D.a[0], bL = it.D.b[0];
+      const s = it.score;                        // 1..5
+      const dev = (s - 1) / 4 - 0.5;             // -0.5..0.5，正 = 偏 a 侧
+      const strength = Math.abs(dev) * 2;        // 0..1 偏离中点的强度
+      const isA = (aL === it.letter);
+      const fillLeft = dev >= 0 ? (50 - strength * 50) : 50;
+      const fillW = Math.max(strength * 50, 3);
+      const note = Math.abs(it.strength) < 0.26 ? '接近均衡，两边都能用'
+        : (Math.abs(it.strength) < 0.6 ? '倾向轻微，可以练另一边' : '倾向明显，这是你的默认档');
+      return `<div class="dim-row">
+        <div class="dim-head">
+          <span class="${isA ? 'dim-hit' : 'dim-a'}">${it.D.a}</span>
+          <span class="${!isA ? 'dim-hit' : 'dim-b'}">${it.D.b}</span>
+        </div>
+        <div class="dim-track">
+          <span class="dim-fill" style="left:${fillLeft.toFixed(1)}%;width:${fillW.toFixed(1)}%"></span>
+          <span class="dim-mid"></span>
+        </div>
+        <div class="dim-note">${note}</div>
+      </div>`;
+    }).join('');
+    const mbtiHtml = `
+      <div class="card block">
+        <h3 class="block-title">你想事和决断的习惯 <i>四象</i></h3>
+        <div class="code-line">
+          <span class="code">${r.code}</span>
+          <span class="code-sub">应变风格 ${r.openLetter} · 1-5 分自评</span>
+        </div>
+        ${dimRows}
+        <div class="dim-note" style="margin-top:8px">${Q.DIMENSIONS['EI'].desc}</div>
+      </div>`;
+
+    /* 霍兰德 */
+    const segs = r.holSorted.filter(k => r.hol[k] > 0).map(k =>
+      `<div class="hol-seg" style="width:${(r.hol[k] / r.holTotal * 100).toFixed(1)}%;background:${HEX_COLOR[k]}">${k} ${r.hol[k]}</div>`
+    ).join('');
+    const holItems = r.top3.map((k, i) => {
+      const h = HO[k];
+      return `<div class="hol-item">
+        <div class="hol-name">${i + 1}. ${h.name} ${k}<em>${h.en} · ${h.keyword}</em></div>
+        <div class="hol-text"><b>适配方向：</b>${h.fit}</div>
+        <div class="hol-text"><b>典型失分：</b>${h.risk}</div>
+      </div>`;
+    }).join('');
+    const holHtml = `
+      <div class="card block">
+        <h3 class="block-title">做什么事你最不累 <i>六趣</i></h3>
+        <div class="code-line">
+          <span class="code">${r.top3.join('')}</span>
+          <span class="code-sub">三码 · 强迫选择法统计</span>
+        </div>
+        <div class="hol-bar">${segs}</div>
+        ${holItems}
+      </div>`;
+
+    /* 时运关系 */
+    const relHtml = `
+      <div class="card block">
+        <h3 class="block-title">当下这步该怎么走 <i>时运</i></h3>
+        <div class="relation">
+          <div class="relation-h">${r.rel.label} <em>${r.rel.tone}</em></div>
+          <div class="relation-t">外卦${r.oEl} · 内卦${r.iEl}。${r.rel.text}</div>
+        </div>
+        <div class="advice xing">
+          <div class="advice-h"><span class="badge badge-xing">卦辞提示</span>${r.hex.n}</div>
+          <div class="advice-t">${r.hex.t}</div>
+        </div>
+      </div>`;
+
+    /* 行动建议 */
+    const actHtml = `
+      <div class="card block">
+        <h3 class="block-title">三句话带走 <i>带走</i></h3>
+        <div class="advice">
+          <div class="advice-h"><span class="badge badge-shun">顺势</span>你靠什么立身</div>
+          <div class="advice-t">${E[r.main].strength}最匹配的领域是${HO[r.top3[0]].fit.split('、').slice(0, 3).join('、')}一类。${HO[r.top3[0]].keyword.split(' · ')[0]}是你的天然优势位。</div>
+        </div>
+        <div class="advice bi">
+          <div class="advice-h"><span class="badge badge-bi">避坑</span>你最容易在哪里漏</div>
+          <div class="advice-t">${E[r.main].drain}${HO[r.top3[0]].risk}</div>
+        </div>
+        <div class="advice xing">
+          <div class="advice-h"><span class="badge badge-xing">下一步</span>未来三个月做一件</div>
+          <div class="advice-t">${E[r.main].advice}同时，${r.hex.t}</div>
+        </div>
+      </div>`;
+
+    document.getElementById('resultBody').innerHTML = hexHtml + splitHtml + elHtml + mbtiHtml + holHtml + relHtml + actHtml;
+
+    /* 逐张弹入 */
+    document.querySelectorAll('#resultBody .block').forEach((b, i) => {
+      b.style.animationDelay = (0.06 * i).toFixed(2) + 's';
+    });
+
+    renderAnalysis();
+    show('screen-result');
+  }
+
+  /* ---------------- 题库解析 ---------------- */
+  function renderAnalysis() {
+    document.getElementById('analysisBody').innerHTML = QUESTIONS.map(q => {
+      let ans = '未作答';
+      if (state.answers[q.id] !== undefined) {
+        if (q.type === 'scale') {
+          ans = `自评 ${state.answers[q.id]} 分（${q.scale[state.answers[q.id] - 1]}）`;
+        } else {
+          const o = q.options.find(x => x.key === state.answers[q.id]);
+          ans = `选 ${o.key}：${o.text}`;
+        }
+      }
+      return `<div class="an-q">
+        <div class="an-stem">${q.id}. ${q.stem}</div>
+        <div class="an-ans">${ans}</div>
+        <div class="an-basis">${q.basis}</div>
+      </div>`;
+    }).join('');
+  }
+
+  /* ---------------- 文字版报告 ---------------- */
+  function buildReport() {
+    const r = state.result;
+    const T = H.TRIGRAMS, E = H.ELEMENTS, HO = Q.HOLLAND;
+    const L = [];
+    L.push('【事业运测评报告】');
+    L.push('');
+    L.push(`本卦：${r.hex.n}（${r.outer}上${r.inner}下）`);
+    L.push(`象传：${r.hex.x}`);
+    if (r.hex.m) L.push(`今译：${r.hex.m}`);
+    L.push(`提示：${r.hex.t}`);
+    L.push('');
+    L.push('— 卦象来处 —');
+    L.push(`上卦（时运位）：${r.outer}为${T[r.outer].symbol} ← 五行主行「${r.main}」+ 内外向「${r.dims['EI'].letter}」`);
+    L.push(`下卦（能力位）：${r.inner}为${T[r.inner].symbol} ← 职业兴趣主型「${HO[r.top3[0]].name}」`);
+    L.push('');
+    L.push('— 禀赋·五行 —');
+    EL_ORDER.forEach(k => L.push(`  ${k}：${r.el[k]} 分${k === r.main ? '（主行）' : (k === r.weak ? '（弱行）' : '')}`));
+    L.push(`  主行「${r.main}」：${E[r.main].nature}性。${E[r.main].strength}`);
+    L.push(`  弱行「${r.weak}」补位：${E[r.weak].advice}`);
+    L.push('');
+    L.push('— 性情·四象 —');
+    L.push(`  类型码：${r.code}（应变风格 ${r.openLetter}）`);
+    ['EI', 'SN', 'TF', 'JP', 'OPEN'].forEach(d => {
+      const it = r.dims[d];
+      L.push(`  ${it.D.a} / ${it.D.b} → ${it.letter}（自评 ${it.score}/5）`);
+    });
+    L.push('');
+    L.push('— 志业·六趣 —');
+    L.push(`  霍兰德三码：${r.top3.join('')}`);
+    r.top3.forEach((k, i) => {
+      L.push(`  ${i + 1}. ${HO[k].name}（${k}）：${HO[k].keyword}`);
+      L.push(`     适配：${HO[k].fit}`);
+      L.push(`     失分：${HO[k].risk}`);
+    });
+    L.push('');
+    L.push('— 当下时运 —');
+    L.push(`  ${r.rel.label}（外${r.oEl} / 内${r.iEl}）：${r.rel.text}`);
+    L.push('');
+    L.push('（本报告为自我觉察工具，卦象为象征性语言，不构成职业建议或预测。）');
+    return L.join('\n');
+  }
+
+  function copyReport() {
+    const text = buildReport();
+    const done = () => toast('报告已复制，可以直接粘贴');
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else {
+      fallback();
+    }
+    function fallback() {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); done(); }
+      catch (e) { toast('复制失败，请手动选择文本'); }
+      document.body.removeChild(ta);
+    }
+  }
+
+  /* ---------------- 事件绑定 ---------------- */
+  function bind() {
+    document.getElementById('btnStart').addEventListener('click', () => {
+      const answered = Object.keys(state.answers).length;
+      if (answered > 0 && answered < TOTAL) toast('接着上次的进度继续');
+      state.idx = Math.min(state.idx, TOTAL - 1);
+      renderQuestion();
+      show('screen-quiz');
+    });
+
+    document.getElementById('btnBackIntro').addEventListener('click', () => show('screen-intro'));
+
+    document.getElementById('btnPrev').addEventListener('click', () => {
+      clearTimeout(advanceTimer);
+      if (state.idx > 0) { state.idx--; renderQuestion(); save(); }
+    });
+
+    document.getElementById('btnNext').addEventListener('click', () => {
+      clearTimeout(advanceTimer);
+      if (state.idx < TOTAL - 1) { state.idx++; renderQuestion(); save(); }
+      else { castThen(renderResult); }
+    });
+
+    document.getElementById('btnCopy').addEventListener('click', copyReport);
+
+    document.getElementById('btnRestart').addEventListener('click', () => {
+      state.answers = {}; state.idx = 0; state.result = null;
+      try { localStorage.removeItem(STORE_KEY); } catch (e) {}
+      renderQuestion();
+      show('screen-quiz');
+    });
+  }
+
+  /* ---------------- 启动 ---------------- */
+  load();
+  initFloaties();
+  renderPicks();
+  renderBeads();
+  renderQuestion();
+  bind();
+
+  /* 自检：数据完整性（仅控制台提示，不影响使用） */
+  (function selfCheck() {
+    const errs = [];
+    if (QUESTIONS.length !== 15) errs.push('题目数不为 15');
+    let count = 0;
+    Object.keys(H.HEX).forEach(u => { count += Object.keys(H.HEX[u]).length; });
+    if (count !== 64) errs.push('六十四卦数据量异常：' + count);
+    ['R', 'I', 'A', 'S', 'E', 'C'].forEach(k => {
+      if (!Q.HOLLAND_TO_TRIGRAM[k]) errs.push('霍兰德→八卦映射缺失 ' + k);
+    });
+    Q.MODULES.forEach(m => { if (!m.blurb) errs.push('模块缺 blurb：' + m.id); });
+    if (errs.length) console.warn('[自检未通过]', errs);
+    else console.log('[自检通过] 15 题 / 64 卦 / 映射完整');
+  })();
+})();
+
+</script>
+</body>
+</html>
